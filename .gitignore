@@ -340,4 +340,4 @@ ASALocalRun/
 healthchecksdb
 
 # wwwroot files
-*/wwwroot
+wwwroot/

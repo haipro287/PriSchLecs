@@ -1,5 +1,5 @@
 {
-  "name": "prischlecs.frontend",
+  "name": "prischlecs.backend",
   "scripts": {
     "dev": "cross-env ASPNETCORE_ENVIRONMENT=Development NODE_ENV=development dotnet run",
     "build": "npm run build-vendor:prod && npm run build:prod",
