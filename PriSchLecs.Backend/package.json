@@ -11,6 +11,7 @@
     "update-packages": "npx npm-check -u"
   },
   "dependencies": {
+    "ant-design-vue": "^1.5.3",
     "axios": "^0.19.2",
     "bootstrap-vue": "2.11.0",
     "core-js": "^3.6.5",
