@@ -11,6 +11,8 @@
     "update-packages": "npx npm-check -u"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^18.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.1",
     "ant-design-vue": "^1.5.3",
     "axios": "^0.19.2",
     "bootstrap-vue": "2.11.0",
