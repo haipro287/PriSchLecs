@@ -1,40 +1,86 @@
-﻿<template>
+﻿
+<template>
     <a-layout id="components-layout-demo-top-side-2">
-        <a-layout-header class="header">
-            <div class="logo" />
+        <a-layout-header class="header" id="test">
+            <div class="logo">
+                Chia sẻ kiến thức tiểu học
+            </div>
             <a-menu theme="dark"
                     mode="horizontal"
                     :defaultSelectedKeys="['2']"
                     :style="{ lineHeight: '64px' }">
-                <a-menu-item v-for="(men, index) in menu" :key="index">{{men.name}}</a-menu-item>
+                <a-menu-item v-for="subCategory in category" :key="subCategory.name">
+                    <router-link :to="subCategory.path">{{ subCategory.name }}</router-link>
+                </a-menu-item>
             </a-menu>
+            <div class="search">
+                <input type="text" placeholder="Tìm kiếm" />
+                <a-icon type="search" style="width: 20px; height: 60%; position: absolute; top: 8px; left: calc(100% - 77px); transform: scale(1.5);"/>
+            </div>
         </a-layout-header>
         <a-layout>
             <a-layout-sider width="200" style="background: #fff">
                 <a-menu mode="inline"
-                        :defaultSelectedKeys="['1']"
-                        :defaultOpenKeys="['sub1']"
                         :style="{ height: '100%', borderRight: 0 }">
                     <a-sub-menu key="sub1">
-                        <span slot="title"><a-icon type="user" />subnav 1</span>
-                        <a-menu-item key="1">option1</a-menu-item>
-                        <a-menu-item key="2">option2</a-menu-item>
-                        <a-menu-item key="3">option3</a-menu-item>
-                        <a-menu-item key="4">option4</a-menu-item>
+                        <span slot="title"><a-icon type="user" />Lớp 1</span>
+                        <a-menu-item key="1">
+                            <router-link to="/math1">Toán</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="2">
+                            <router-link to="/literature1">Văn</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="3">
+                            <router-link to="/english1">Anh</router-link>
+                        </a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub2">
-                        <span slot="title"><a-icon type="laptop" />subnav 2</span>
-                        <a-menu-item key="5">option5</a-menu-item>
-                        <a-menu-item key="6">option6</a-menu-item>
-                        <a-menu-item key="7">option7</a-menu-item>
-                        <a-menu-item key="8">option8</a-menu-item>
+                        <span slot="title"><a-icon type="user" />Lớp 2</span>
+                        <a-menu-item key="4">
+                            <router-link to="/math2">Toán</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="5">
+                            <router-link to="/literature2">Văn</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="6">
+                            <router-link to="/english2">Anh</router-link>
+                        </a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub3">
-                        <span slot="title"><a-icon type="notification" />subnav 3</span>
-                        <a-menu-item key="9">option9</a-menu-item>
-                        <a-menu-item key="10">option10</a-menu-item>
-                        <a-menu-item key="11">option11</a-menu-item>
-                        <a-menu-item key="12">option12</a-menu-item>
+                        <span slot="title"><a-icon type="user" />Lớp 3</span>
+                        <a-menu-item key="7">
+                            <router-link to="/math3">Toán</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="8">
+                            <router-link to="/literature3">Văn</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="9">
+                            <router-link to="/english3">Anh</router-link>
+                        </a-menu-item>
+                    </a-sub-menu>
+                    <a-sub-menu key="sub4">
+                        <span slot="title"><a-icon type="user" />Lớp 4</span>
+                        <a-menu-item key="10">
+                            <router-link to="/math4">Toán</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="11">
+                            <router-link to="/literature4">Văn</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="12">
+                            <router-link to="/english4">Anh</router-link>
+                        </a-menu-item>
+                    </a-sub-menu>
+                    <a-sub-menu key="sub5">
+                        <span slot="title"><a-icon type="user" />Lớp 5</span>
+                        <a-menu-item key="13">
+                            <router-link to="/math5">Toán</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="14">
+                            <router-link to="/literature5">Văn</router-link>
+                        </a-menu-item>
+                        <a-menu-item key="15">
+                            <router-link to="/english5">Anh</router-link>
+                        </a-menu-item>
                     </a-sub-menu>
                 </a-menu>
             </a-layout-sider>
@@ -52,14 +98,35 @@
                         {{content.name}}
                         {{content.grade}}
                     </div>
-                 </a-layout-content>
+                </a-layout-content>
             </a-layout>
         </a-layout>
+        <a-layout-footer style="background: #001529; color: #fff;">
+            <div class="welcome">
+                Ứng dụng chia sẻ kiến thức bậc tiểu học
+            </div>
+            <div class="contact">
+                <h2 style="color: #fff;">Liên hệ với chúng tôi</h2>
+                <div class="address">
+                    <a-icon type="bank"/>
+                    <p>Địa chỉ: UET-VNU, Xuân Thủy, Cầu Giấy, Hà Nội</p>
+                </div>
+                <div class="telephone">
+                    <a-icon type="phone" />
+                    <p>SĐT: 0123456789</p>
+                </div>
+                <div class="email">
+                    <a-icon type="red-envelope" />
+                    <p>Email: cungHocCNPM@gmail.com</p>
+                </div>
+            </div>
+        </a-layout-footer>
     </a-layout>
 </template>
 <script>
     import lecture from './lecture';
     import { menu } from '../menu/menu';
+    import { categories } from '../menu/menu';
     export default {
         data() {
             return {
@@ -74,22 +141,18 @@
                         grade: 'q92p401',
                     }
                 ],
-                menu: menu
+                menu: menu,
+                category: categories 
             };
         },
         components: {
             lecture
         }
     };
+    
 </script>
 
 <style>
-    #components-layout-demo-top-side-2 .logo {
-        width: 120px;
-        height: 31px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 16px 28px 16px 0;
-        float: left;
-    }
+    @import '../css/menu.css';
 </style>
     
