@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\components\" />
-    <Folder Include="ClientApp\views\" />
+    <Folder Include="ClientApp\css\" />
   </ItemGroup>
 
 
