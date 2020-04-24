@@ -2,9 +2,11 @@
 <template>
     <a-layout id="components-layout-demo-top-side-2">
         <a-layout-header class="header" id="test">
-            <div class="logo">
-                Chia sẻ kiến thức tiểu học
-            </div>
+            <router-link to="/">
+                <div class="logo">
+                    Chia sẻ bài giảng tiểu học
+                </div>
+            </router-link>
             <a-menu theme="dark"
                     mode="horizontal"
                     :defaultSelectedKeys="['2']"
@@ -15,7 +17,7 @@
             </a-menu>
             <div class="search">
                 <input type="text" placeholder="Tìm kiếm" />
-                <a-icon type="search" style="width: 20px; height: 60%; position: absolute; top: 8px; left: calc(100% - 77px); transform: scale(1.5);"/>
+                <a-icon type="search" style="width: 20px; height: 60%; position: absolute; top: 8px; left: calc(100% - 77px); transform: scale(1.5);" />
             </div>
         </a-layout-header>
         <a-layout>
@@ -92,12 +94,6 @@
                 </a-breadcrumb>
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <router-view></router-view>
-                    <lecture></lecture>
-
-                    <div v-for="(content, index) in contents " :key="index">
-                        {{content.name}}
-                        {{content.grade}}
-                    </div>
                 </a-layout-content>
             </a-layout>
         </a-layout>
@@ -108,7 +104,7 @@
             <div class="contact">
                 <h2 style="color: #fff;">Liên hệ với chúng tôi</h2>
                 <div class="address">
-                    <a-icon type="bank"/>
+                    <a-icon type="bank" />
                     <p>Địa chỉ: UET-VNU, Xuân Thủy, Cầu Giấy, Hà Nội</p>
                 </div>
                 <div class="telephone">
@@ -131,28 +127,17 @@
         data() {
             return {
                 collapsed: false,
-                contents: [
-                    {
-                        name: 'hai',
-                        grade: 'ao;spq',
-                    },
-                    {
-                        name: 'huy',
-                        grade: 'q92p401',
-                    }
-                ],
                 menu: menu,
-                category: categories 
+                category: categories
             };
         },
         components: {
             lecture
         }
     };
-    
+
 </script>
 
 <style>
     @import '../css/menu.css';
 </style>
-    
