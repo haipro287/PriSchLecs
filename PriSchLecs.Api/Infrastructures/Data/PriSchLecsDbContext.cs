@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PriSchLecs.Api.Domains.Categories;
+using PriSchLecs.Api.Domains.Lectures;
+using PriSchLecs.Api.Infrastructures.Data.EntityMapping;
+using PriSchLecs.Api.Infrastructures.Data.EntityMapping.Categories;
+using PriSchLecs.Api.Infrastructures.Data.EntityMapping.Lectures;
 
 namespace PriSchLecs.Api.Infrastructures.Data
 {
-    public class PriSchLecsDbContext: DbContext
+    public class PriSchLecsDbContext : DbContext
     {
         public PriSchLecsDbContext(DbContextOptions<PriSchLecsDbContext> options) : base(options)
         {
@@ -16,7 +21,10 @@ namespace PriSchLecs.Api.Infrastructures.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
+            builder
+                .RegisterEntityMapping<Lecture, LectureMap>()
+                .RegisterEntityMapping<Category, CategoryMap>();
+
         }
     }
 }

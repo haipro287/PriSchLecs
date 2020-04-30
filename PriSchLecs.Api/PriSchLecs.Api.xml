@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PriSchLecs.Api</name>
+    </assembly>
+    <members>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryController.Search(PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam)">
+            <summary>
+            API tìm kiếm bài giảng
+            </summary>
+            <param name="param">Tham số smartTable</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryController.GetById(System.Int32)">
+            <summary>
+            API lấy thông tin bài giảng theo Id
+            </summary>
+            <param name="id">Id bài giảng cần lấy</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Lectures.LectureController.Search(PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam)">
+            <summary>
+            API tìm kiếm bài giảng
+            </summary>
+            <param name="param">Tham số smartTable</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Lectures.LectureController.GetById(System.Int32)">
+            <summary>
+            API lấy thông tin bài giảng theo Id
+            </summary>
+            <param name="id">Id bài giảng cần lấy</param>
+            <returns></returns>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntity.Id">
+            <summary>
+            Id của thực thể
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntity.CreatedTime">
+            <summary>
+            Ngày tạo thực thể
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntity.UpdatedTime">
+            <summary>
+            Ngày cập nhật thực thể
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntity.IsDeleted">
+            <summary>
+            Thực thể đã bị xóa chưa?
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.Category.Name">
+            <summary>
+            Tên danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.Category.Description">
+            <summary>
+            Mô tả
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.Category.ParentId">
+            <summary>
+            Mã danh mục cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Comments.Comment.Content">
+            <summary>
+            Nội dung bình luận
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Comments.Comment.Username">
+            <summary>
+            Tên người dùng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Comments.Comment.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Comments.Comment.LectureId">
+            <summary>
+            Mã bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Comments.Comment.ParentId">
+            <summary>
+            Mã bình luận cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Files.File.Name">
+            <summary>
+            Tên file
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Files.File.Path">
+            <summary>
+            Đường dẫn
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Files.File.Drive">
+            <summary>
+            Ổ
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Files.File.Domain">
+            <summary>
+            Tên miền
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Lectures.Lecture.Name">
+            <summary>
+            Tên bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Lectures.Lecture.Content">
+            <summary>
+            Nội dung bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Lectures.Lecture.Description">
+            <summary>
+            Mô tả bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Lectures.Lecture.View">
+            <summary>
+            Số lượt xem
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Lectures.Lecture.Download">
+            <summary>
+            Số lượt tải
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.AutoMapperConfig.Mapper">
+            <summary>
+            Mapper
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.AutoMapperConfig.MapperConfiguration">
+            <summary>
+            Mapper configuration
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.BaseItem.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.BaseItem.CreatedTime">
+            <summary>
+            Ngày tạo
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.BaseItem.UpdatedTime">
+            <summary>
+            Ngày cập nhật
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryItem.Name">
+            <summary>
+            Tên danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryItem.Description">
+            <summary>
+            Mô tả
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryItem.ParentId">
+            <summary>
+            Mã danh mục cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Lectures.LectureItem.Name">
+            <summary>
+            Tên bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Lectures.LectureItem.Content">
+            <summary>
+            Nội dung bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Lectures.LectureItem.Description">
+            <summary>
+            Mô tả bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Lectures.LectureItem.View">
+            <summary>
+            Số lượt xem
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Lectures.LectureItem.Download">
+            <summary>
+            Số lượt tải
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.BaseModel.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Categories.CategoryModel.Name">
+            <summary>
+            Tên danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Categories.CategoryModel.Description">
+            <summary>
+            Mô tả
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Categories.CategoryModel.ParentId">
+            <summary>
+            Mã danh mục cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Lectures.LectureModel.Name">
+            <summary>
+            Tên bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Lectures.LectureModel.Content">
+            <summary>
+            Nội dung bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Lectures.LectureModel.Description">
+            <summary>
+            Mô tả bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Lectures.LectureModel.View">
+            <summary>
+            Số lượt xem
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Lectures.LectureModel.Download">
+            <summary>
+            Số lượt tải
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Results.BaseResult.Result">
+            <summary>
+            Kết quả
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Results.BaseResult.Message">
+            <summary>
+            Thông điệp
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Results.CreateOrUpdateResult.Id">
+            <summary>
+            Id của đối tượng vừa tạo
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.From">
+            <summary>
+            Từ
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.PageIndex">
+            <summary>
+            Trang thứ
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.PageSize">
+            <summary>
+            Kích thước trang
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.Total">
+            <summary>
+            Tổng số bản ghi
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.TotalPages">
+            <summary>
+            Tổng số trang
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.Start">
+            <summary>
+            Bản ghi bắt đầu
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.Pagination.TotalItemCount">
+            <summary>
+            Tổng số lượng bản ghi
+            </summary>
+        </member>
+        <member name="T:PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam">
+            <summary>
+            Tham số tìm kiếm
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam.Pagination">
+            <summary>
+            Phân trang
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam.Search">
+            <summary>
+            Điều kiện tìm kiếm
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam.Sort">
+            <summary>
+            Điều kiện sắp xếp
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam.IsExport">
+            <summary>
+            Có phải xuất dữ liệu hay không?
+            </summary>
+        </member>
+    </members>
+</doc>
