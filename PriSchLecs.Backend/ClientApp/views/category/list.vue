@@ -1,7 +1,7 @@
 ﻿<template>
     <!--<a-spin tip="Đang tải..." :spinning="IsLoading">-->
     <a-row>
-        <h5>Quản lý bài giảng</h5>
+        <h5>Quản lý danh mục</h5>
         <b-card class="mt-3" footer-tag="footer">
             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                 <div class="row">
@@ -30,10 +30,11 @@
         </b-card>
         <div class="card">
             <div class="card-header card-header-flex">
-                <div class="flex-column justify-content-center">      <!--d-flex-->
-                    <router-link to="/lecture/createorupdate/0">
+                <div class="flex-column justify-content-center">
+                    <!--d-flex-->
+                    <router-link to="/category/createorupdate/0">
                         <a-button type="primary" icon="plus">
-                            Tạo bài giảng
+                            Tạo danh mục
                         </a-button>
                     </router-link>
                     <router-link to="/category/addlecture">
@@ -51,7 +52,7 @@
                          bordered
                          :pagination="false">
                     <span slot="action" slot-scope="record">
-                        <router-link :to="{path:'/lecture/createorupdate/' + record.id}">
+                        <router-link :to="{path:'/category/createorupdate/' + record.id}">
                             <a-button class="btn btn-sm btn-primary mr-2">
                                 <a-icon type="edit" />
                                 Sửa
@@ -144,7 +145,7 @@
                     title: 'ID',
                     dataIndex: 'id',
                 }, {
-                    title: 'Tên bài giảng',
+                    title: 'Tên danh mục',
                     dataIndex: 'name',
                 }, {
                     title: 'Mô tả ngắn',

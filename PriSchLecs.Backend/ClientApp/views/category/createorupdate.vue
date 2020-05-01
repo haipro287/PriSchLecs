@@ -1,9 +1,9 @@
 ﻿<template>
     <div>
-        <h5>Tạo / cập nhật bài giảng</h5>
+        <h5>Tạo / cập nhật danh mục</h5>
         <div class="row">
             <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="Thông tin bài giảng" key="1">
+                <a-tab-pane tab="Thông tin danh mục" key="1">
                     <a-form layout="vertical" :form="FrmProduct">
                         <div class="col-lg-12 text-right">
                             <a-button type="primary" html-type="button" icon="save" @click="SaveAndFinish">Lưu lại</a-button>
@@ -11,24 +11,21 @@
                             <a-button type="danger" html-type="button" icon="save" @click="Reset">Reset thông tin</a-button>
                         </div>
                         <div class="col">
-                            <a-form-item label="Tên bài giảng" class="mb-2">
-                                <a-input v-decorator="['Name', { rules: [{ required: true, message: 'Vui lòng nhập tên bài giảng!' }] }]" />
+                            <a-form-item label="Tên danh mục" class="mb-2">
+                                <a-input v-decorator="['Name', { rules: [{ required: true, message: 'Vui lòng nhập tên danh mục!' }] }]" />
                             </a-form-item>
                         </div>
                         <div class="col">
                             <a-form-item label="ngắn" class="mb-2">
                                 <!--<a-input v-decorator="['shortdescription', { rules: [{ required: true, message: 'Vui lòng nhập tên bài giảng!' }] }]" />-->
                                 <a-textarea placeholder="Mô tả ngắn"
-                                            v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn bài giảng!' }] }]"
+                                            v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn danh mục!' }] }]"
                                             :autosize="{ minRows: 3, maxRows: 6 }" />
-                            </a-form-item>
-                            <a-form-item label="Content">
-                                <ckeditor :editor="editor" v-model="Model.Content" :config="editorConfig"></ckeditor>
                             </a-form-item>
                         </div>
                     </a-form>
                 </a-tab-pane>
-                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn danh mục" key="2">
+                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn bài giảng" key="2">
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
@@ -56,13 +53,13 @@
                                     {{record.toString()}}
                                 </span>
                             </a-table>
-                            
+
                         </div>
                     </div>
                 </a-tab-pane>
             </a-tabs>
         </div>
-        
+
     </div>
 </template>
 <script>
@@ -141,7 +138,7 @@
                             }
                             else {
                                 this.$message.success('Lưu dữ liệu thành công', 3);
-                                this.$router.replace("/list");
+                                this.$router.replace("/product");
                             }
                         }).catch(error => {
                             this.$message.error('Không thể kết nối tới máy chủ', 3);
@@ -160,7 +157,7 @@
                             }
                             else {
                                 this.$message.success('Lưu dữ liệu thành công!', 3);
-                                this.$router.replace("/lecture/createorupdate/" + r.data.id);
+                                this.$router.replace("/category/createorupdate/" + r.data.id);
                             }
                         }).catch(error => {
                             this.$message.error('Đã xảy ra lỗi!', 3);
