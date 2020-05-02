@@ -6,7 +6,7 @@ using PriSchLecs.Api.Domains.BaseEntities;
 
 namespace PriSchLecs.Api.Domains.Comments
 {
-    public class Comment: BaseEntity
+    public class Comment: BaseEntityByInt
     {
         /// <summary>
         /// Nội dung bình luận

@@ -8,11 +8,6 @@ namespace PriSchLecs.Api.Dtos.Items
     public class BaseItem
     {
         /// <summary>
-        /// Id
-        /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
         /// Ngày tạo
         /// </summary>
         public DateTimeOffset? CreatedTime { get; set; }

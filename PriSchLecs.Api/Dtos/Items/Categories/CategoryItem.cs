@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PriSchLecs.Api.Dtos.Items.Categories
 {
-    public class CategoryItem: BaseItem
+    public class CategoryItem: BaseItemInt
     {
         /// <summary>
         /// Tên danh mục

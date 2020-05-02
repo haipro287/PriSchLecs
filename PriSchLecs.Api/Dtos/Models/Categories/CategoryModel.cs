@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PriSchLecs.Api.Dtos.Models.Categories
 {
-    public class CategoryModel: BaseModel
+    public class CategoryModel: BaseModelInt
     {
         /// <summary>
         /// Tên danh mục

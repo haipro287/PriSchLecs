@@ -68,5 +68,27 @@ namespace PriSchLecs.Api.Dtos
             return entity.MapTo(destination);
         }
         #endregion
+
+        #region CategoryLecture
+        public static CategoryLectureModel ToModel(this CategoryLecture entity)
+        {
+            return entity.MapTo<CategoryLecture, CategoryLectureModel>();
+        }
+
+        public static CategoryLectureItem ToItem(this CategoryLecture entity)
+        {
+            return entity.MapTo<CategoryLecture, CategoryLectureItem>();
+        }
+
+        public static CategoryLecture ToCategoryLecture(this CategoryLectureModel model)
+        {
+            return model.MapTo<CategoryLectureModel, CategoryLecture>();
+        }
+
+        public static CategoryLecture ToCategoryLecture(this CategoryLecture entity, CategoryLecture destination)
+        {
+            return entity.MapTo(destination);
+        }
+        #endregion
     }
 }

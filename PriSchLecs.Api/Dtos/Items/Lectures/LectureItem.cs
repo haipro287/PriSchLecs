@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PriSchLecs.Api.Dtos.Items.Lectures
 {
-    public class LectureItem: BaseItem
+    public class LectureItem: BaseItemInt
     {
         /// <summary>
         /// Tên bài giảng
