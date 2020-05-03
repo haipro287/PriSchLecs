@@ -5,7 +5,11 @@ using System.Threading.Tasks;
 
 namespace PriSchLecs.Api.Dtos.Models
 {
-    public class BaseModel
+    public class BaseModelInt
     {
+        /// <summary>
+        /// Id
+        /// </summary>
+        public int Id { get; set; }
     }
 }

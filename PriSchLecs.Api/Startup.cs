@@ -48,6 +48,7 @@ namespace PriSchLecs.Api
             #region Services
             services.AddScoped<ILectureService, LectureService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICategoryLectureService, CategoryLectureService>();
             #endregion
 
             services.AddControllers();

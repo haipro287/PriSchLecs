@@ -8,7 +8,7 @@ namespace PriSchLecs.Api.Infrastructures.Services
 {
     public static class CommonService
     {
-        public static T UpdateCommonInt<T>(this T entity) where T : BaseEntity
+        public static T UpdateCommonInt<T>(this T entity) where T : BaseEntityByInt
         {
             if (entity.Id > 0)
             {

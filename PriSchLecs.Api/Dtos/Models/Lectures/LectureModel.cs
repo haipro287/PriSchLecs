@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PriSchLecs.Api.Dtos.Models.Lectures
 {
-    public class LectureModel: BaseModel
+    public class LectureModel: BaseModelInt
     {
         /// <summary>
         /// Tên bài giảng

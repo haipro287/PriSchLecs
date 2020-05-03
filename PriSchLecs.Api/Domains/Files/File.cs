@@ -6,7 +6,7 @@ using PriSchLecs.Api.Domains.BaseEntities;
 
 namespace PriSchLecs.Api.Domains.Files
 {
-    public class File: BaseEntity
+    public class File: BaseEntityByInt
     {
         /// <summary>
         /// Tên file

@@ -23,7 +23,7 @@ namespace PriSchLecs.Api.Controllers.Lectures
         /// <summary>
         /// API tìm kiếm bài giảng
         /// </summary>
-        /// <param name="param">Tham số smartTable</param>
+        /// <param name="param">Tham số SmartTable (tìm kiếm theo tên (Keyword), phân trang, sắp xếp)</param>
         /// <returns></returns>
         [HttpPost("Search")]
         public async Task<IActionResult> Search([FromBody]SmartTableParam param)
@@ -44,6 +44,11 @@ namespace PriSchLecs.Api.Controllers.Lectures
             return Ok(result);
         }
 
+        /// <summary>
+        /// API tạo mới hoặc cập nhật bài giảng
+        /// </summary>
+        /// <param name="model">Model muốn tạo mới hoặc cập nhật</param>
+        /// <returns></returns>
         [HttpPost("CreateOrUpdate")]
         public async Task<IActionResult> CreateOrUpdate([FromBody]LectureModel model)
         {
@@ -51,6 +56,11 @@ namespace PriSchLecs.Api.Controllers.Lectures
             return Ok(result);
         }
 
+        /// <summary>
+        /// API xóa bài giảng theo Id
+        /// </summary>
+        /// <param name="id">Id bài giảng cần xóa</param>
+        /// <returns></returns>
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {

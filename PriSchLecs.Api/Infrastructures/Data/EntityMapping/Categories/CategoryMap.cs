@@ -12,6 +12,7 @@ namespace PriSchLecs.Api.Infrastructures.Data.EntityMapping.Categories
     {
         public void Map(EntityTypeBuilder<Category> builder)
         {
+            builder.HasMany(c => c.Children).WithOne(c => c.Parent).HasForeignKey(c => c.ParentId).OnDelete(DeleteBehavior.NoAction);
             builder.ToTable("Category");
         }
     }

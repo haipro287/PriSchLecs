@@ -8,7 +8,7 @@
             <summary>
             API tìm kiếm bài giảng
             </summary>
-            <param name="param">Tham số smartTable</param>
+            <param name="param">Tham số SmartTable (tìm kiếm theo tên (Keyword), phân trang, sắp xếp)</param>
             <returns></returns>
         </member>
         <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryController.GetById(System.Int32)">
@@ -18,11 +18,54 @@
             <param name="id">Id bài giảng cần lấy</param>
             <returns></returns>
         </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryController.CreateOrUpdate(PriSchLecs.Api.Dtos.Models.Categories.CategoryModel)">
+            <summary>
+            API tạo mới hoặc cập nhật danh mục
+            </summary>
+            <param name="model">Model muốn tạo mới hoặc cập nhật</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryController.Delete(System.Int32)">
+            <summary>
+            API xóa danh mục theo Id
+            </summary>
+            <param name="id">Id cần xóa</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryLectureController.Create(PriSchLecs.Api.Dtos.Models.Categories.CategoryLectureModel)">
+            <summary>
+            API Tạo liên kết danh mục - bài giảng
+            </summary>
+            <param name="model">Model liên kết</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryLectureController.Delete(System.Int32,System.Int32)">
+            <summary>
+            API xóa liên kết danh mục - bài giảng
+            </summary>
+            <param name="categoryId">Id của danh mục</param>
+            <param name="lectureId">Id của bài giảng</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryLectureController.GetCategoryByLectureId(System.Int32)">
+            <summary>
+            API lấy danh mục theo Id bài giảng
+            </summary>
+            <param name="lectureId">Id bài giảng</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Categories.CategoryLectureController.GetLectureByCategoryId(PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam)">
+            <summary>
+            API lấy bài giảng theo Id danh mục
+            </summary>
+            <param name="param">Tham số SmartTable tìm kiếm theo Id danh mục (CategoryId), phân trang, sắp xếp</param>
+            <returns></returns>
+        </member>
         <member name="M:PriSchLecs.Api.Controllers.Lectures.LectureController.Search(PriSchLecs.Api.Infrastructure.SmartTable.SmartTableParam)">
             <summary>
             API tìm kiếm bài giảng
             </summary>
-            <param name="param">Tham số smartTable</param>
+            <param name="param">Tham số SmartTable (tìm kiếm theo tên (Keyword), phân trang, sắp xếp)</param>
             <returns></returns>
         </member>
         <member name="M:PriSchLecs.Api.Controllers.Lectures.LectureController.GetById(System.Int32)">
@@ -32,10 +75,19 @@
             <param name="id">Id bài giảng cần lấy</param>
             <returns></returns>
         </member>
-        <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntity.Id">
+        <member name="M:PriSchLecs.Api.Controllers.Lectures.LectureController.CreateOrUpdate(PriSchLecs.Api.Dtos.Models.Lectures.LectureModel)">
             <summary>
-            Id của thực thể
+            API tạo mới hoặc cập nhật bài giảng
             </summary>
+            <param name="model">Model muốn tạo mới hoặc cập nhật</param>
+            <returns></returns>
+        </member>
+        <member name="M:PriSchLecs.Api.Controllers.Lectures.LectureController.Delete(System.Int32)">
+            <summary>
+            API xóa bài giảng theo Id
+            </summary>
+            <param name="id">Id bài giảng cần xóa</param>
+            <returns></returns>
         </member>
         <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntity.CreatedTime">
             <summary>
@@ -52,6 +104,11 @@
             Thực thể đã bị xóa chưa?
             </summary>
         </member>
+        <member name="P:PriSchLecs.Api.Domains.BaseEntities.BaseEntityByInt.Id">
+            <summary>
+            Id của thực thể
+            </summary>
+        </member>
         <member name="P:PriSchLecs.Api.Domains.Categories.Category.Name">
             <summary>
             Tên danh mục
@@ -65,6 +122,36 @@
         <member name="P:PriSchLecs.Api.Domains.Categories.Category.ParentId">
             <summary>
             Mã danh mục cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.Category.Parent">
+            <summary>
+            Thực thể cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.Category.Children">
+            <summary>
+            Tập thực thể con
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.CategoryLecture.CategoryId">
+            <summary>
+            Mã danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.CategoryLecture.LectureId">
+            <summary>
+            Mã bài giảng
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.CategoryLecture.Category">
+            <summary>
+            Thực thể danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Domains.Categories.CategoryLecture.Lecture">
+            <summary>
+            Thực thể bài giảng 
             </summary>
         </member>
         <member name="P:PriSchLecs.Api.Domains.Comments.Comment.Content">
@@ -147,11 +234,6 @@
             Mapper configuration
             </summary>
         </member>
-        <member name="P:PriSchLecs.Api.Dtos.Items.BaseItem.Id">
-            <summary>
-            Id
-            </summary>
-        </member>
         <member name="P:PriSchLecs.Api.Dtos.Items.BaseItem.CreatedTime">
             <summary>
             Ngày tạo
@@ -160,6 +242,11 @@
         <member name="P:PriSchLecs.Api.Dtos.Items.BaseItem.UpdatedTime">
             <summary>
             Ngày cập nhật
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.BaseItemInt.Id">
+            <summary>
+            Id
             </summary>
         </member>
         <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryItem.Name">
@@ -175,6 +262,16 @@
         <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryItem.ParentId">
             <summary>
             Mã danh mục cha
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryLectureItem.CategoryId">
+            <summary>
+            Mã danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Items.Categories.CategoryLectureItem.LectureId">
+            <summary>
+            Mã bài giảng
             </summary>
         </member>
         <member name="P:PriSchLecs.Api.Dtos.Items.Lectures.LectureItem.Name">
@@ -202,9 +299,19 @@
             Số lượt tải
             </summary>
         </member>
-        <member name="P:PriSchLecs.Api.Dtos.Models.BaseModel.Id">
+        <member name="P:PriSchLecs.Api.Dtos.Models.BaseModelInt.Id">
             <summary>
             Id
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Categories.CategoryLectureModel.CategoryId">
+            <summary>
+            Mã danh mục
+            </summary>
+        </member>
+        <member name="P:PriSchLecs.Api.Dtos.Models.Categories.CategoryLectureModel.LectureId">
+            <summary>
+            Mã bài giảng
             </summary>
         </member>
         <member name="P:PriSchLecs.Api.Dtos.Models.Categories.CategoryModel.Name">
