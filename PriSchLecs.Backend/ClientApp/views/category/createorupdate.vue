@@ -4,7 +4,7 @@
         <div class="row">
             <a-tabs defaultActiveKey="1">
                 <a-tab-pane tab="Thông tin danh mục" key="1">
-                    <a-form layout="vertical" :form="FrmProduct">
+                    <a-form layout="vertical">
                         <div class="col-lg-12 text-right">
                             <a-button type="primary" html-type="button" icon="save" @click="SaveAndFinish">Lưu lại</a-button>
                             <a-button type="primary" html-type="button" icon="save" @click="Save">Lưu và sửa tiếp</a-button>
@@ -12,13 +12,15 @@
                         </div>
                         <div class="col">
                             <a-form-item label="Tên danh mục" class="mb-2">
-                                <a-input v-decorator="['Name', { rules: [{ required: true, message: 'Vui lòng nhập tên danh mục!' }] }]" />
+                                <a-input v-model="Model.name" 
+                                         v-decorator="['Name', { rules: [{ required: true, message: 'Vui lòng nhập tên danh mục!' }] }]" />
                             </a-form-item>
                         </div>
                         <div class="col">
-                            <a-form-item label="ngắn" class="mb-2">
+                            <a-form-item label="Mô tả ngắn" class="mb-2">
                                 <!--<a-input v-decorator="['shortdescription', { rules: [{ required: true, message: 'Vui lòng nhập tên bài giảng!' }] }]" />-->
                                 <a-textarea placeholder="Mô tả ngắn"
+                                            v-model="Model.description"
                                             v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn danh mục!' }] }]"
                                             :autosize="{ minRows: 3, maxRows: 6 }" />
                             </a-form-item>
@@ -67,15 +69,10 @@
     import CKEditor from '@ckeditor/ckeditor5-build-classic';
     export default {
         created() {
-            Axios.get(ProductApi.getById + this.$route.params.id).then(r => {
-                this.Model.Name = r.data.name;
-                this.Model.ShortDescription = r.data.shortDescription;
-                this.Model.Description = r.data.description;
-                this.Model.Sku = r.data.sku;
-                this.Model.Price = r.data.price;
-                this.Model.OldPrice = r.data.oldPrice;
-                this.Model.CallForPrice = r.data.callForPrice;
-                this.Model.Id = this.$route.params.id;
+            Axios.get("https://localhost:44356/api/Category/GetById/" + this.$route.params.id).then(r => {
+                this.Model.name = r.data.name;
+                this.Model.description = r.data.description;
+                this.Model.id = this.$route.params.id;
             }).then(() => {
                 this.CreateForm();
             });
@@ -85,17 +82,10 @@
         },
         data() {
             return {
-                FrmProduct: null,
                 Model: {
-                    Name: '',
-                    ShortDescription: "Short Description",
-                    Description: "",
-                    Sku: '',
-                    Price: 0,
-                    OldPrice: 0,
-                    CallForPrice: false,
-                    Status: 1,
-                    Id: 0,
+                    name: '',
+                    description: "",
+                    id: 0,
                 },
                 editor: CKEditor,
                 editorConfig: {
@@ -129,41 +119,33 @@
                 this.Model.Id = this.$route.params.id;
             },
             async SaveAndFinish() {
-                this.FrmProduct.validateFieldsAndScroll((errors, values) => {
-                    if (!errors) {
-                        this.GetModel();
-                        Axios.post(ProductApi.createOrUpdate, this.Model).then(r => {
-                            if (r.data.result != 1) {
-                                this.$message.error(r.data.message);
-                            }
-                            else {
-                                this.$message.success('Lưu dữ liệu thành công', 3);
-                                this.$router.replace("/product");
-                            }
-                        }).catch(error => {
-                            this.$message.error('Không thể kết nối tới máy chủ', 3);
-                            console.log(error);
-                        });
+                this.GetModel();
+                Axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
+                    if (r.data.result != 1) {
+                        this.$message.error(r.data.message);
                     }
+                    else {
+                        this.$message.success('Lưu dữ liệu thành công', 3);
+                        this.$router.replace("/category/list");
+                    }
+                }).catch(error => {
+                    this.$message.error('Không thể kết nối tới máy chủ', 3);
+                    console.log(error);
                 });
             },
             Save() {
-                this.FrmProduct.validateFieldsAndScroll((errors, values) => {
-                    if (!errors) {
-                        this.GetModel();
-                        Axios.post(ProductApi.createOrUpdate, this.Model).then(r => {
-                            if (r.data.result != 1) {
-                                this.$message.error(r.data.message);
-                            }
-                            else {
-                                this.$message.success('Lưu dữ liệu thành công!', 3);
-                                this.$router.replace("/category/createorupdate/" + r.data.id);
-                            }
-                        }).catch(error => {
-                            this.$message.error('Đã xảy ra lỗi!', 3);
-                            console.log(error);
-                        });
+                this.GetModel();
+                Axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
+                    if (r.data.result != 1) {
+                        this.$message.error(r.data.message);
                     }
+                    else {
+                        this.$message.success('Lưu dữ liệu thành công!', 3);
+                        this.$router.replace("/category/createorupdate/" + r.data.id);
+                    }
+                }).catch(error => {
+                    this.$message.error('Đã xảy ra lỗi!', 3);
+                    console.log(error);
                 });
             },
             Reset() {

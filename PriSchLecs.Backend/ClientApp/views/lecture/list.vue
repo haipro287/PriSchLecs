@@ -126,19 +126,7 @@
 
                     }
                 },
-                Items: [
-                    {
-                        id: 18020644,
-                        name: 'Huy',
-                        description: 'HuyHero',
-                        views: 1000000,
-                        downloads: 9999,
-                        comments: 'Sugoi<3',
-                        createdTimeDisplay: '11/11/2019',
-                        updatedTimeDisplay: '1/1/2020',
-                        action: 1
-                    }
-                ],
+                Items: [],
                 PageSizeOptions: ['5', '15', '25', '50', '100', '200', '500', '1000'],
                 Columns: [{
                     title: 'ID',
@@ -207,7 +195,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post(ProductApi.list, params).then(r => {
+                axios.post("https://localhost:44356/api/Lecture/Search/", params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -235,7 +223,7 @@
             },
             DeleteProduct(id) {
                 if (confirm("Có thật sự muốn xóa?")) {
-                    axios.delete(ProductApi.delete + id).then(response => {
+                    axios.delete("https://localhost:44356/api/Lecture/Delete/" + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadData();

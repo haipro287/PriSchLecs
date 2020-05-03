@@ -208,7 +208,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post(ProductApi.list, params).then(r => {
+                axios.post("https://localhost:44356/api/Category/search/", params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -236,7 +236,7 @@
             },
             DeleteProduct(id) {
                 if (confirm("Có thật sự muốn xóa?")) {
-                    axios.delete(ProductApi.delete + id).then(response => {
+                    axios.delete("https://localhost:44356/api/Category/Delete/" + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadData();
