@@ -37,11 +37,6 @@
                             Tạo danh mục
                         </a-button>
                     </router-link>
-                    <router-link to="/category/addlecture">
-                        <a-button type="primary" icon="plus">
-                            Thêm bài giảng vào danh mục
-                        </a-button>
-                    </router-link>
                 </div>
             </div>
             <div class="card-body" style="padding:16px;">
@@ -61,6 +56,10 @@
                         <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
                             <a-icon type="delete" />
                             Xóa
+                        </a-button>
+                        <a-button class="btn btn-sm mr-2" style="border:#4CAF50; background-color:#4CAF50; color:#fff">
+                            <a-icon type="folder-add" />
+                            Thêm bài giảng
                         </a-button>
                     </span>
                     <span slot="callForPrice" slot-scope="record">
@@ -127,19 +126,7 @@
 
                     }
                 },
-                Items: [
-                    {
-                        id: 18020644,
-                        name: 'Huy',
-                        description: 'HuyHero',
-                        views: 1000000,
-                        downloads: 9999,
-                        comments: 'Sugoi<3',
-                        createdTimeDisplay: '11/11/2019',
-                        updatedTimeDisplay: '1/1/2020',
-                        action: 1
-                    }
-                ],
+                Items: [],
                 PageSizeOptions: ['5', '15', '25', '50', '100', '200', '500', '1000'],
                 Columns: [{
                     title: 'ID',
@@ -151,15 +138,6 @@
                     title: 'Mô tả ngắn',
                     dataIndex: 'description',
                 }, {
-                    title: 'Số lượt xem',
-                    dataIndex: 'views'
-                }, {
-                    title: 'Số lượt tải',
-                    dataIndex: 'downloads'
-                }, {
-                    title: 'Số bình luận',
-                    dataIndex: 'comments'
-                }, {
                     title: 'Ngày tạo',
                     dataIndex: 'createdTimeDisplay',
                 }, {
@@ -167,7 +145,8 @@
                     dataIndex: 'updatedTimeDisplay',
                 }, {
                     title: 'Action',
-                    scopedSlots: { customRender: 'action' }
+                    scopedSlots: { customRender: 'action' },
+                    width: 330
                 },
                 ]
             }

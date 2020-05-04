@@ -31,9 +31,9 @@
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
-                                <router-link to="/category/addlecture">
+                                <router-link to="/category/addlecture"> <!--thêm liên kết bài giảng/danh mục-->
                                     <a-button type="primary" icon="plus">
-                                        Thêm bài giảng vào danh mục
+                                        Thêm bài giảng
                                     </a-button>
                                 </router-link>
                             </div>
@@ -46,7 +46,7 @@
                                      bordered
                                      :pagination="false">
                                 <span slot="action" slot-scope="record">
-                                    <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
+                                    <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)"> <!--cái này chỉ để xóa bài giảng, cần phải sửa để xóa liên kết api-->
                                         <a-icon type="delete" />
                                         Xóa
                                     </a-button>
@@ -98,18 +98,16 @@
                 let options = {
                     mapPropsToFields: () => {
                         return {
-                            Name: this.$form.createFormField({ value: this.Model.Name, }),
-                            ShortDescription: this.$form.createFormField({ value: this.Model.ShortDescription }),
-                            Sku: this.$form.createFormField({ value: this.Model.Sku }),
-                            Price: this.$form.createFormField({ value: this.Model.Price }),
-                            OldPrice: this.$form.createFormField({ value: this.Model.OldPrice }),
-                            CallForPrice: this.$form.createFormField({ value: this.Model.CallForPrice }),
+                            name: this.$form.createFormField({ value: this.Model.name, }),
+                            description: this.$form.createFormField({ value: this.Model.description, }),
+                            id: this.$form.createFormField({ value: this.Model.id, }),
+
                         };
                     }
                 }
-                this.FrmProduct = this.$form.createForm(this, options);
+                /*this.FrmProduct = this.$form.createForm(this, options);*/
             },
-            GetModel() {
+            GetModel() {   /*đoạn này chưa hiểu để làm gì*/
                 this.Model.Name = this.FrmProduct.getFieldValue('Name');
                 this.Model.ShortDescription = this.FrmProduct.getFieldValue('ShortDescription');
                 this.Model.Sku = this.FrmProduct.getFieldValue('Sku');
@@ -119,7 +117,7 @@
                 this.Model.Id = this.$route.params.id;
             },
             async SaveAndFinish() {
-                this.GetModel();
+                /*this.GetModel();*/      /*cần sửa*/
                 Axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
@@ -134,7 +132,7 @@
                 });
             },
             Save() {
-                this.GetModel();
+                /*this.GetModel();*/  /*cần sửa*/
                 Axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
@@ -148,8 +146,8 @@
                     console.log(error);
                 });
             },
-            Reset() {
-                Axios.get(ProductApi.getById + this.$route.params.id).then(r => {
+            Reset() {                       /*cần sửa,, chưa hiểu reset cái gì*/
+                Axios.get(ProductApi.getById + this.$route.params.id).then(r => {  
                     this.FrmProduct.setFieldsValue({
                         Name: r.data.name,
                         ShortDescription: r.data.shortDescription,
@@ -162,7 +160,7 @@
                     this.$message.success('Reset thành công', 3);
                 })
             },
-            OnChange(e) {
+            OnChange(e) {           /*chắc là sẽ bỏ*/
                 this.Model.CallForPrice = !this.Model.CallForPrice;
             }
         },

@@ -34,9 +34,10 @@
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
-                                <router-link to="/category/addlecture">
-                                    <a-button type="primary" icon="plus">
-                                        Thêm bài giảng vào danh mục
+                                <router-link to="/categorylecture/addcategory"> <!--thêm api tạo liên kết danh mục/bài giảng ở đây-->
+                                    <a-button class="btn btn-sm btn-primary mr-2">
+                                        <a-icon type="folder-add" />
+                                        Thêm danh mục
                                     </a-button>
                                 </router-link>
                             </div>
@@ -103,37 +104,32 @@
                 let options = {
                     mapPropsToFields: () => {
                         return {
-                            Name: this.$form.createFormField({ value: this.Model.Name, }),
-                            ShortDescription: this.$form.createFormField({ value: this.Model.ShortDescription }),
-                            Sku: this.$form.createFormField({ value: this.Model.Sku }),
-                            Price: this.$form.createFormField({ value: this.Model.Price }),
-                            OldPrice: this.$form.createFormField({ value: this.Model.OldPrice }),
-                            CallForPrice: this.$form.createFormField({ value: this.Model.CallForPrice }),
+                            name: this.$form.createFormField({ value: this.Model.name, }),
+                            description: this.$form.createFormField({ value: this.Model.description }),
+                            content: this.$form.createFormField({ value: this.Model.content }),
+                            id: this.$form.createFormField({ value: this.Model.id }),
                         };
                     }
                 }
-                this.FrmProduct = this.$form.createForm(this, options);
+                /*this.FrmProduct = this.$form.createForm(this, options);*/
             },
-            GetModel() {
-                this.Model.Name = this.FrmProduct.getFieldValue('Name');
-                this.Model.ShortDescription = this.FrmProduct.getFieldValue('ShortDescription');
-                this.Model.Sku = this.FrmProduct.getFieldValue('Sku');
-                this.Model.Price = this.FrmProduct.getFieldValue('Price');
-                this.Model.OldPrice = this.FrmProduct.getFieldValue('OldPrice');
-                this.Model.CallForPrice = this.FrmProduct.getFieldValue('CallForPrice');
-                this.Model.Id = this.$route.params.id;
+            GetModel() {            /*đoạn này chưa hiểu để làm gì---hỏi hải*/
+                this.Model.name = this.FrmProduct.getFieldValue('Name');
+                this.Model.description = this.FrmProduct.getFieldValue('Description');
+                this.Model.id = this.$route.params.id;
             },
             async SaveAndFinish() {
-                this.GetModel();
+                /*this.GetModel();*/
                 Axios.post("https://localhost:44356/api/lecture/createorupdate/", this.Model).then(r => {
                     if (r.data.result == 1) {
                         this.$message.success("Lưu dữ liệu thành công!");
                         this.$router.replace("/lecture/list");
                     }
+                   
                 })
             },
             Save() {
-                this.GetModel();
+                /*this.GetModel();*/
                 Axios.post("https://localhost:44356/api/lecture/createorupdate/", this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);

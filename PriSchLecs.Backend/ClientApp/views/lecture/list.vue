@@ -30,15 +30,11 @@
         </b-card>
         <div class="card">
             <div class="card-header card-header-flex">
-                <div class="flex-column justify-content-center">      <!--d-flex-->
+                <div class="flex-column justify-content-center">
+                    <!--d-flex-->
                     <router-link to="/lecture/createorupdate/0">
                         <a-button type="primary" icon="plus">
                             Tạo bài giảng
-                        </a-button>
-                    </router-link>
-                    <router-link to="/category/addlecture">
-                        <a-button type="primary" icon="plus">
-                            Thêm bài giảng vào danh mục
                         </a-button>
                     </router-link>
                 </div>
@@ -49,7 +45,8 @@
                          :tableLayout="auto"
                          :scroll="{}"
                          bordered
-                         :pagination="false">
+                         :pagination="false"
+                         >
                     <span slot="action" slot-scope="record">
                         <router-link :to="{path:'/lecture/createorupdate/' + record.id}">
                             <a-button class="btn btn-sm btn-primary mr-2">
@@ -60,6 +57,10 @@
                         <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
                             <a-icon type="delete" />
                             Xóa
+                        </a-button>
+                        <a-button class="btn btn-sm mr-2" style="border:#4CAF50; background-color:#4CAF50; color:#fff">
+                            <a-icon type="folder-add" />
+                            Thêm danh mục
                         </a-button>
                     </span>
                     <span slot="callForPrice" slot-scope="record">
@@ -92,8 +93,6 @@
         </div>
     </a-row>
     <!--</a-spin>-->
-
-
 </template>
 
 <script>
@@ -154,7 +153,8 @@
                     dataIndex: 'updatedTimeDisplay',
                 }, {
                     title: 'Action',
-                    scopedSlots: { customRender: 'action' }
+                    scopedSlots: { customRender: 'action' },
+                    width: 180
                 },
                 ]
             }
