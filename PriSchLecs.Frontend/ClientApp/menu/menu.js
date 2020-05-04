@@ -8,7 +8,8 @@
     </a-menu-item>
 </a-sub-menu>
  */
-export const menu = [
+export
+    const menu = [
     {
         name: "Lớp 1",
         path: "/grade1",
@@ -103,18 +104,18 @@ export const menu = [
 export const categories = [
     {
         name: "Bài giảng",
-        path: "/category/lesson"
+        path: "/categorys/lesson"
     },
     {
         name: "Giáo án",
-        path: "/category/lessonPlan"
+        path: "/categorys/lessonPlan"
     },
     {
         name: "Đề thi & Kiểm tra",
-        path: "/category/exam&test"
+        path: "/categorys/exam"
     },
     {
         name: "Tư liệu",
-        path: "/category/documentation"
+        path: "/categorys/documentation"
     }
 ];
