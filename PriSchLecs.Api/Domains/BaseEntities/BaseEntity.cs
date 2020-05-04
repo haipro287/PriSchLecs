@@ -8,11 +8,6 @@ namespace PriSchLecs.Api.Domains.BaseEntities
     public class BaseEntity
     {
         /// <summary>
-        /// Id của thực thể
-        /// </summary>
-        public int Id { get; set; }                 
-
-        /// <summary>
         /// Ngày tạo thực thể
         /// </summary>
         public DateTimeOffset? CreatedTime { get; set; }

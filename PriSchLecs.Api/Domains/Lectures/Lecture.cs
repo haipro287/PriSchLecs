@@ -6,7 +6,7 @@ using PriSchLecs.Api.Domains.BaseEntities;
 
 namespace PriSchLecs.Api.Domains.Lectures
 {
-    public class Lecture : BaseEntity
+    public class Lecture : BaseEntityByInt
     {
         /// <summary>
         /// Tên bài giảng
