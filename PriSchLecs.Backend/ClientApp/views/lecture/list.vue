@@ -2,7 +2,7 @@
     <!--<a-spin tip="Đang tải..." :spinning="IsLoading">-->
     <a-row>
         <h5>Quản lý bài giảng</h5>
-        <b-card class="mt-3" footer-tag="footer">
+        <b-card class="mt-3" footer-tag="footer"> <!--khung tìm kiếm-->
             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-lg-3">
@@ -28,7 +28,7 @@
                 </div>
             </a-form>
         </b-card>
-        <div class="card">
+        <div class="card"><!--Danh sách-->
             <div class="card-header card-header-flex">
                 <div class="flex-column justify-content-center">
                     <!--d-flex-->
@@ -45,8 +45,7 @@
                          :tableLayout="auto"
                          :scroll="{}"
                          bordered
-                         :pagination="false"
-                         >
+                         :pagination="false">
                     <span slot="action" slot-scope="record">
                         <router-link :to="{path:'/lecture/createorupdate/' + record.id}">
                             <a-button class="btn btn-sm btn-primary mr-2">
@@ -58,14 +57,10 @@
                             <a-icon type="delete" />
                             Xóa
                         </a-button>
-                        <a-button class="btn btn-sm mr-2" style="border:#4CAF50; background-color:#4CAF50; color:#fff">
-                            <a-icon type="folder-add" />
-                            Thêm danh mục
-                        </a-button>
                     </span>
-                    <span slot="callForPrice" slot-scope="record">
+                    <!--<span slot="callForPrice" slot-scope="record">
                         {{record.toString()}}
-                    </span>
+                    </span>-->
                 </a-table>
                 <a-pagination class="mt-2 ant-pagination ant-table-pagination"
                               :total="Pagination.Total"
@@ -101,7 +96,6 @@
     export default {
         created() {
             this.CreateFormSearch();
-
         },
         mounted() {
             this.LoadData();
@@ -122,7 +116,6 @@
                 },
                 Search: {
                     PredicateObject: {
-
                     }
                 },
                 Items: [],
@@ -228,6 +221,7 @@
                         if (response.data.result == 1) {
                             this.LoadData();
                         }
+                        this.$message.success("Xóa thành công!")
                     });
                 }
             },
@@ -241,6 +235,3 @@
         }
     }
 </script>
-
-<style>
-</style>

@@ -6,6 +6,8 @@ const LectureList = () => import('../views/lecture/list');
 const CategoryCreateOrUpdate = () => import('../views/category/createorupdate');
 const CategoryList = () => import('../views/category/list');
 
+const UploadFile = () => import('../views/file/upload');
+
 export const routes = [{
     name: 'lecture',
     path: '/lecture',
@@ -39,4 +41,17 @@ export const routes = [{
             component: CategoryList
         }
     ]
-}];
+}/*,
+{
+    name: 'file',
+    path: '/file',
+    component: Anonymous,
+    children: [
+        {
+            name: 'upload',
+            path: 'upload',
+            component: UploadFile
+        }
+    ]
+}*/         /*when have API Upload will appear*/
+];

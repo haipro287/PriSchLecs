@@ -3,7 +3,7 @@
         <h5>Tạo / cập nhật bài giảng</h5>
         <div class="row">
             <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="Thông tin bài giảng" key="1">
+                <a-tab-pane tab="Thông tin bài giảng" key="1"> <!--tab sửa bài giảng-->
                     <a-form layout="vertical">
                         <div class="col-lg-12 text-right">
                             <a-button type="primary" html-type="button" icon="save" @click="SaveAndFinish">Lưu lại</a-button>
@@ -18,7 +18,6 @@
                         </div>
                         <div class="col">
                             <a-form-item label="Mô tả ngắn" class="mb-2">
-                                <!--<a-input v-decorator="['shortdescription', { rules: [{ required: true, message: 'Vui lòng nhập tên bài giảng!' }] }]" />-->
                                 <a-textarea placeholder="Mô tả ngắn"
                                             v-model="Model.description"
                                             v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn bài giảng!' }] }]"
@@ -30,7 +29,7 @@
                         </div>
                     </a-form>
                 </a-tab-pane>
-                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn danh mục" key="2">
+                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn danh mục" key="2"> <!--tab thêm danh mục-->
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
@@ -41,7 +40,7 @@
                                 <a-modal title="Chọn danh mục"
                                          :visible="visible"
                                          @ok="handleOk"
-                                         @cancel="handleCancel" width="1280px">
+                                         @cancel="handleCancel" width="1280px"> <!--bảng danh sách các danh mục để thêm-->
                                     <a-row>
                                         <b-card class="mt-3" footer-tag="footer">
                                             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
@@ -83,20 +82,6 @@
                                                          bordered
                                                          :pagination="false">
                                                     <span slot="action" slot-scope="record">
-                                                        <!--<router-link :to="{path:'/category/createorupdate/' + record.id}">
-                                                            <a-button class="btn btn-sm btn-primary mr-2">
-                                                                <a-icon type="edit" />
-                                                                Sửa
-                                                            </a-button>
-                                                        </router-link>
-                                                        <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
-                                                            <a-icon type="delete" />
-                                                            Xóa
-                                                        </a-button>
-                                                        <a-button class="btn btn-sm mr-2" style="border:#4CAF50; background-color:#4CAF50; color:#fff">
-                                                            <a-icon type="folder-add" />
-                                                            Thêm bài giảng
-                                                        </a-button>-->
                                                         <a-button type="primary" icon="plus" @click="CreateConnect(record.id)">
                                                             Thêm
                                                         </a-button>
@@ -133,7 +118,7 @@
                                 </a-modal>
                             </div>
                         </div>
-                        <div class="card-body" style="padding:16px;">
+                        <div class="card-body" style="padding:16px;"> <!--danh sách các danh mục có sẵn của bài giảng-->
                             <a-table :columns="Columns" :data-source="dataOfc">
                                 <span slot="action" slot-scope="record">
                                     <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteConnect(record.id)">
@@ -253,7 +238,7 @@
                 }
                 /*this.FrmProduct = this.$form.createForm(this, options);*/
             },
-            GetModel() {            /*đoạn này chưa hiểu để làm gì---hỏi hải*/
+            GetModel() {           
                 this.Model.name = this.FrmProduct.getFieldValue('Name');
                 this.Model.description = this.FrmProduct.getFieldValue('Description');
                 this.Model.id = this.$route.params.id;
@@ -284,13 +269,15 @@
                 });
             },
             Reset() {
-                axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => { /*???*/
-                    this.Model.name = r.data.name;
-                    this.Model.description = r.data.description;
-                    this.Model.content = r.data.content;
-                    this.Model.id = this.$route.params.id;
+                if (confirm("Có thực sự muốn reset?")) {
+                    axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => {
+                        this.Model.name = r.data.name;
+                        this.Model.description = r.data.description;
+                        this.Model.content = r.data.content;
+                        this.Model.id = this.$route.params.id;
+                    })
                     this.$message.success('Reset thành công', 3);
-                })
+                }
             },
             OnChange(e) {
                 this.Model.CallForPrice = !this.Model.CallForPrice;
@@ -365,6 +352,7 @@
                 this.LoadData();
             },
 
+            /* các hàm load danh sách của bài giảng */
             LoadCOLData() {
                 this.IsLoading = true;
                 axios.get("https://localhost:44356/api/CategoryLecture/GetCategoryByLectureId/" + this.$route.params.id).then(r => {
@@ -387,6 +375,7 @@
                     this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
+            /* các hàm tạo và xóa liên kết */
             CreateConnect(id) {
                 var param = {
                     categoryId: id,

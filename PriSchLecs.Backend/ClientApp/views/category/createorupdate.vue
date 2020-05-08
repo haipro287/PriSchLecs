@@ -3,7 +3,7 @@
         <h5>Tạo / cập nhật danh mục</h5>
         <div class="row">
             <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="Thông tin danh mục" key="1">
+                <a-tab-pane tab="Thông tin danh mục" key="1"><!--tab sửa danh mục-->
                     <a-form layout="vertical">
                         <div class="col-lg-12 text-right">
                             <a-button type="primary" html-type="button" icon="save" @click="SaveAndFinish">Lưu lại</a-button>
@@ -18,7 +18,6 @@
                         </div>
                         <div class="col">
                             <a-form-item label="Mô tả ngắn" class="mb-2">
-                                <!--<a-input v-decorator="['shortdescription', { rules: [{ required: true, message: 'Vui lòng nhập tên bài giảng!' }] }]" />-->
                                 <a-textarea placeholder="Mô tả ngắn"
                                             v-model="Model.description"
                                             v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn danh mục!' }] }]"
@@ -27,7 +26,7 @@
                         </div>
                     </a-form>
                 </a-tab-pane>
-                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn bài giảng" key="2">
+                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn bài giảng" key="2"><!--tab thêm bài giảng-->
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
@@ -38,7 +37,7 @@
                                          :visible="visible"
                                          @ok="handleOk"
                                          @cancel="handleCancel" width="1280px">
-                                    <a-row>
+                                    <a-row><!--bảng danh sách các bài giảng để thêm-->
                                         <b-card class="mt-3" footer-tag="footer">
                                             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                                                 <div class="row">
@@ -79,16 +78,6 @@
                                                          bordered
                                                          :pagination="false">
                                                     <span slot="action" slot-scope="record">
-                                                        <!--<router-link :to="{path:'/lecture/createorupdate/' + record.id}">
-                                                                <a-button class="btn btn-sm btn-primary mr-2">
-                                                                    <a-icon type="edit" />
-                                                                    Sửa
-                                                                </a-button>
-                                                            </router-link>
-                                                            <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
-                                                                <a-icon type="delete" />
-                                                                Xóa
-                                                            </a-button>-->
                                                         <a-button class="btn btn-sm btn-primary mr-2" type="primary" icon="plus" @click="CreateConnect(record.id)">
                                                             Thêm
                                                         </a-button>
@@ -127,7 +116,7 @@
                         </div>
                         <div class="card-body" style="padding:16px;">
                             <a-row>
-                                <b-card class="mt-3" footer-tag="footer">
+                                <b-card class="mt-3" footer-tag="footer"><!--bảng danh sách các bài giảng có sẵn trong danh mục-->
                                     <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                                         <div class="row">
                                             <div class="col-md-6 col-sm-12 col-lg-3">
@@ -167,16 +156,6 @@
                                                  bordered
                                                  :pagination="false">
                                             <span slot="action" slot-scope="record">
-                                                <!--<router-link :to="{path:'/lecture/createorupdate/' + record.id}">
-                            <a-button class="btn btn-sm btn-primary mr-2">
-                                <a-icon type="edit" />
-                                Sửa
-                            </a-button>
-                        </router-link>
-                        <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
-                            <a-icon type="delete" />
-                            Xóa
-                        </a-button>-->
                                                 <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteConnect(record.id)">
                                                     <a-icon type="delete" />
                                                     Xóa
@@ -307,6 +286,7 @@
             }
         },
         methods: {
+            /* các hàm để bật tắt modal */
             showModal() {
                 this.visible = true;
             },
@@ -317,7 +297,7 @@
                 console.log('Clicked cancel button');
                 this.visible = false;
             },
-
+            /* các hàm sửa danh mục và hiển thị danh sách các bài giảng để thêm */
             CreateForm() {
                 let options = {
                     mapPropsToFields: () => {
@@ -331,7 +311,7 @@
                 }
                 /*this.FrmProduct = this.$form.createForm(this, options);*/
             },
-            GetModel() {   /*đoạn này chưa hiểu để làm gì*/
+            GetModel() {  
                 this.Model.Name = this.FrmProduct.getFieldValue('Name');
                 this.Model.ShortDescription = this.FrmProduct.getFieldValue('ShortDescription');
                 this.Model.Sku = this.FrmProduct.getFieldValue('Sku');
@@ -341,7 +321,7 @@
                 this.Model.Id = this.$route.params.id;
             },
             async SaveAndFinish() {
-                /*this.GetModel();*/      /*cần sửa*/
+                /*this.GetModel();*/     
                 axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
@@ -356,7 +336,7 @@
                 });
             },
             Save() {
-                /*this.GetModel();*/  /*cần sửa*/
+                /*this.GetModel();*/ 
                 axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
@@ -370,22 +350,15 @@
                     console.log(error);
                 });
             },
-            Reset() {                       /*cần sửa,, chưa hiểu reset cái gì*/
-                axios.get(ProductApi.getById + this.$route.params.id).then(r => {  
-                    this.FrmProduct.setFieldsValue({
-                        Name: r.data.name,
-                        ShortDescription: r.data.shortDescription,
-                        Sku: r.data.sku,
-                        Price: r.data.price,
-                        OldPrice: r.data.oldPrice,
-                        CallForPrice: r.data.callForPrice,
+            Reset() {
+                if (confirm("Có thực sự muốn reset?")) {
+                    axios.get("https://localhost:44356/api/category/getbyid/" + this.$route.params.id).then(r => {
+                        this.Model.name = r.data.name;
+                        this.Model.description = r.data.description;
+                        this.Model.id = this.$route.params.id;
                     })
-                    this.Model.CallForPrice = r.data.callForPrice;
                     this.$message.success('Reset thành công', 3);
-                })
-            },
-            OnChange(e) {           /*chắc là sẽ bỏ*/
-                this.Model.CallForPrice = !this.Model.CallForPrice;
+                }     
             },
 
             moment,
@@ -400,7 +373,6 @@
                 }
                 this.FrmSearch = this.$form.createForm(this, options);
             },
-            //Events
             FrmSearchSubmit(e) {
                 e.preventDefault();
                 this.Pagination.PageIndex = 1;
@@ -466,7 +438,7 @@
             ChangePage(page, pageSize) {
                 this.LoadData();
             },
-
+            /* các hàm hiển thị danh sách bài giảng trong danh mục */
             GetLOCParam() {
                 return {
                     Pagination: this.Pagination,
@@ -511,12 +483,13 @@
                     this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
+            /* các hàm tạo xóa liên kết*/
             CreateConnect(id) {
                 var param = {
                     categoryId: this.$route.params.id,
                     lectureId: id,
                 };
-                if (confirm("Thêm danh mục " + id + "?")) {
+                if (confirm("Thêm bài giảng " + id + "?")) {
                     axios.post("https://localhost:44356/api/CategoryLecture/Create/", param).then(r => {
                         this.LoadLOCData();
                     }).catch(error => {
