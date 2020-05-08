@@ -55,9 +55,6 @@
                                         Xóa
                                     </a-button>
                                 </span>
-                                <span slot="callForPrice" slot-scope="record">
-                                    {{record.toString()}}
-                                </span>
                             </a-table>
                             
                         </div>
@@ -144,17 +141,16 @@
                 });
             },
             Reset() {
-                Axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => { /*???*/
-                    this.Model.name = r.data.name;
-                    this.Model.description = r.data.description;
-                    this.Model.content = r.data.content;
-                    this.Model.id = this.$route.params.id;
+                if (confirm("Có thực sự muốn reset?")) {
+                    Axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => {
+                        this.Model.name = r.data.name;
+                        this.Model.description = r.data.description;
+                        this.Model.content = r.data.content;
+                        this.Model.id = this.$route.params.id;
+                    })
                     this.$message.success('Reset thành công', 3);
-                })
+                }
             },
-            OnChange(e) {
-                this.Model.CallForPrice = !this.Model.CallForPrice;
-            }
         },
         components: {
 

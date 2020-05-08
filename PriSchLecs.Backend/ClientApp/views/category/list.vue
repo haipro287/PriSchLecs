@@ -57,14 +57,10 @@
                             <a-icon type="delete" />
                             Xóa
                         </a-button>
-                        <a-button class="btn btn-sm mr-2" style="border:#4CAF50; background-color:#4CAF50; color:#fff">
-                            <a-icon type="folder-add" />
-                            Thêm bài giảng
-                        </a-button>
                     </span>
-                    <span slot="callForPrice" slot-scope="record">
+                    <!--<span slot="callForPrice" slot-scope="record">
                         {{record.toString()}}
-                    </span>
+                    </span>-->
                 </a-table>
                 <a-pagination class="mt-2 ant-pagination ant-table-pagination"
                               :total="Pagination.Total"
@@ -146,7 +142,7 @@
                 }, {
                     title: 'Action',
                     scopedSlots: { customRender: 'action' },
-                    width: 330
+                    width: 180
                 },
                 ]
             }

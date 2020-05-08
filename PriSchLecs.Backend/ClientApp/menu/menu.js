@@ -17,4 +17,14 @@
         name: 'Danh sách danh mục',
         path: '/category/list/'
     }]
-}]
+}/*,
+{
+    name: 'File',
+    children: [
+        {
+            name: 'Kho tải lên',
+            path: '/file/upload'
+        }
+    ]
+}*/                 /*when have API Upload will appear*/
+]

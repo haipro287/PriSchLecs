@@ -51,9 +51,6 @@
                                         Xóa
                                     </a-button>
                                 </span>
-                                <span slot="callForPrice" slot-scope="record">
-                                    {{record.toString()}}
-                                </span>
                             </a-table>
 
                         </div>
@@ -146,22 +143,15 @@
                     console.log(error);
                 });
             },
-            Reset() {                       /*cần sửa,, chưa hiểu reset cái gì*/
-                Axios.get(ProductApi.getById + this.$route.params.id).then(r => {  
-                    this.FrmProduct.setFieldsValue({
-                        Name: r.data.name,
-                        ShortDescription: r.data.shortDescription,
-                        Sku: r.data.sku,
-                        Price: r.data.price,
-                        OldPrice: r.data.oldPrice,
-                        CallForPrice: r.data.callForPrice,
+            Reset() {
+                if (confirm("Có thực sự muốn reset?")) {
+                    Axios.get("https://localhost:44356/api/category/getbyid/" + this.$route.params.id).then(r => {
+                        this.Model.name = r.data.name;
+                        this.Model.description = r.data.description;
+                        this.Model.id = this.$route.params.id;
                     })
-                    this.Model.CallForPrice = r.data.callForPrice;
                     this.$message.success('Reset thành công', 3);
-                })
-            },
-            OnChange(e) {           /*chắc là sẽ bỏ*/
-                this.Model.CallForPrice = !this.Model.CallForPrice;
+                }     
             }
         },
         components: {
