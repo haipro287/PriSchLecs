@@ -15,9 +15,8 @@
                     <router-link :to="subCategory.path">{{ subCategory.name }}</router-link>
                 </a-menu-item>
             </a-menu>
-            <div class="search">
-                <input type="text" placeholder="Tìm kiếm" />
-                <a-icon type="search" style="width: 20px; height: 60%; position: absolute; top: 8px; left: calc(100% - 77px); transform: scale(1.5);" />
+            <div class="search">                         
+                <a-input-search placeholder="Tìm kiếm" enter-button @search="onSearch" />
             </div>
         </a-layout-header>
         <a-layout>
@@ -27,61 +26,61 @@
                     <a-sub-menu key="sub1">
                         <span slot="title"><a-icon type="user" />Lớp 1</span>
                         <a-menu-item key="1">
-                            <router-link to="/math1">Toán</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Toán</router-link>
                         </a-menu-item>
                         <a-menu-item key="2">
-                            <router-link to="/literature1">Văn</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Văn</router-link>
                         </a-menu-item>
                         <a-menu-item key="3">
-                            <router-link to="/english1">Anh</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Anh</router-link>
                         </a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub2">
                         <span slot="title"><a-icon type="user" />Lớp 2</span>
                         <a-menu-item key="4">
-                            <router-link to="/math2">Toán</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Toán</router-link>
                         </a-menu-item>
                         <a-menu-item key="5">
-                            <router-link to="/literature2">Văn</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Văn</router-link>
                         </a-menu-item>
                         <a-menu-item key="6">
-                            <router-link to="/english2">Anh</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Anh</router-link>
                         </a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub3">
                         <span slot="title"><a-icon type="user" />Lớp 3</span>
                         <a-menu-item key="7">
-                            <router-link to="/math3">Toán</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Toán</router-link>
                         </a-menu-item>
                         <a-menu-item key="8">
-                            <router-link to="/literature3">Văn</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Văn</router-link>
                         </a-menu-item>
                         <a-menu-item key="9">
-                            <router-link to="/english3">Anh</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Anh</router-link>
                         </a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub4">
                         <span slot="title"><a-icon type="user" />Lớp 4</span>
                         <a-menu-item key="10">
-                            <router-link to="/math4">Toán</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Toán</router-link>
                         </a-menu-item>
                         <a-menu-item key="11">
-                            <router-link to="/literature4">Văn</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Văn</router-link>
                         </a-menu-item>
                         <a-menu-item key="12">
-                            <router-link to="/english4">Anh</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Anh</router-link>
                         </a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub5">
                         <span slot="title"><a-icon type="user" />Lớp 5</span>
                         <a-menu-item key="13">
-                            <router-link to="/math5">Toán</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Toán</router-link>
                         </a-menu-item>
                         <a-menu-item key="14">
-                            <router-link to="/literature5">Văn</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Văn</router-link>
                         </a-menu-item>
                         <a-menu-item key="15">
-                            <router-link to="/english5">Anh</router-link>
+                            <router-link to="/categorys/lesson/listLesson">Anh</router-link>
                         </a-menu-item>
                     </a-sub-menu>
                 </a-menu>
@@ -105,15 +104,15 @@
                 <h2 style="color: #fff;">Liên hệ với chúng tôi</h2>
                 <div class="address">
                     <a-icon type="bank" />
-                    <p>Địa chỉ: UET-VNU, Xuân Thủy, Cầu Giấy, Hà Nội</p>
+                    <span>Địa chỉ: UET-VNU, Xuân Thủy, Cầu Giấy, Hà Nội</span>
                 </div>
                 <div class="telephone">
                     <a-icon type="phone" />
-                    <p>SĐT: 0123456789</p>
+                    <span>SĐT: 0123456789</span>
                 </div>
                 <div class="email">
                     <a-icon type="red-envelope" />
-                    <p>Email: cungHocCNPM@gmail.com</p>
+                    <span>Email: cungHocCNPM@gmail.com</span>
                 </div>
             </div>
         </a-layout-footer>
