@@ -61,7 +61,7 @@ namespace PriSchLecs.Api.Controllers.Categories
         /// <summary>
         /// API lấy bài giảng theo Id danh mục
         /// </summary>
-        /// <param name="param">Tham số SmartTable tìm kiếm theo Id danh mục (CategoryId), phân trang, sắp xếp</param>
+        /// <param name="param">Tham số SmartTable tìm kiếm theo Id danh mục (CategoryId), theo từ khóa trong tên(Keyword), phân trang, sắp xếp</param>
         /// <returns></returns>
        [HttpPost("GetLectureByCategoryId/")]
        public async Task<IActionResult> GetLectureByCategoryId([FromBody] SmartTableParam param)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ using PriSchLecs.Api.Dtos;
 using PriSchLecs.Api.Infrastructures.Data;
 using PriSchLecs.Api.Infrastructures.Repositories;
 using PriSchLecs.Api.Infrastructures.Services.Categories;
+using PriSchLecs.Api.Infrastructures.Services.Files;
 using PriSchLecs.Api.Infrastructures.Services.Lectures;
 
 namespace PriSchLecs.Api
@@ -47,8 +49,10 @@ namespace PriSchLecs.Api
 
             #region Services
             services.AddScoped<ILectureService, LectureService>();
+            services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICategoryLectureService, CategoryLectureService>();
+            services.AddScoped<IFileService, FileService>();
             #endregion
 
             services.AddControllers();
@@ -85,12 +89,18 @@ namespace PriSchLecs.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
             app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.UseSwagger();
 

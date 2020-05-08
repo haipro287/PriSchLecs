@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PriSchLecs.Api.Domains.Categories;
+using PriSchLecs.Api.Domains.Lectures;
 using PriSchLecs.Api.Dtos;
 using PriSchLecs.Api.Dtos.Items.Categories;
 using PriSchLecs.Api.Dtos.Items.Lectures;
@@ -107,14 +108,20 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
         public async Task<SmartTableResult<LectureItem>> GetLecture(SmartTableParam param)
         {
             var query = CategoryLectureRepository.Query();
-            IQueryable<LectureItem> result = null;
+            IQueryable<Lecture> result = null;
             if (param.Search.PredicateObject != null)
             {
                 dynamic search = param.Search.PredicateObject;
                 if (search.CategoryId != null)
                 {
                     int categoryId = search.CategoryId;
-                    result = query.Where(x => x.CategoryId == categoryId).Select(x => x.Lecture.ToItem());
+                    result = query.Where(x => x.CategoryId == categoryId).Select(x => x.Lecture);
+                }
+                if (search.Keyword != null)
+                {
+                    string keyword = search.Keyword;
+                    keyword.Trim().ToLower();
+                    result = result.Where(x => x.Name.Contains(keyword));
                 }
                 if (search.CreateStart != null)
                 {
@@ -130,7 +137,7 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
                     result = result.Where(x => x.CreatedTime <= endOfDay);
                 }
             }
-            var gridData = result.ToSmartTableResult(param, x => x);
+            var gridData = result.ToSmartTableResult(param, x => x.ToItem());
             return gridData;
         }
 
