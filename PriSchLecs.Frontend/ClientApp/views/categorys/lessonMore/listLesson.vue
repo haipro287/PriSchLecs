@@ -153,7 +153,9 @@
                             Total: 0,
                             PageIndex: 1,
                             PageSize: 5
-                        },
+                },
+                PageSizeOptions: ['5', '15', '25', '50', '100', '200', '500', '1000'],
+
             }
         },
         watch: {
@@ -167,6 +169,49 @@
         methods: {
             onShowSizeChange(current, pageSize) {
                 console.log(current, pageSize);
+            },
+            GetSearchParam() {
+                return {
+                    Pagination: this.Pagination,
+                    Sort: this.Sort,
+                    Search: {
+                        PredicateObject: {
+                            Keyword: this.FrmSearch.getFieldValue('Keyword'),
+                            CreateStart: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[0]).format() : null,
+                            CreateEnd: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[1]).format() : null,
+                        }
+                    }
+                }
+            },
+            LoadDataSuccess(r) {
+                this.Items = [];
+                console.log(r);
+                if (r.data.items) {
+                    this.Pagination.Total = r.data.totalRecord;
+                    this.Items = r.data.items;
+                    let key = 1;
+                    this.Items.forEach(item => {
+                        item.key = (this.Pagination.PageIndex - 1) * this.Pagination.PageSize + key;
+                        key = key + 1;
+                    });
+                }
+                else {
+                    this.IsLoading = false;
+                    this.$message.error('Không thể kết nối tới hệ thống', 3);
+                }
+            },
+            LoadData() {
+                this.IsLoading = true;
+                var params = this.GetSearchParam();
+                console.log(params);
+                axios.post(ProductApi.list, params).then(r => {
+                    this.IsLoading = false;
+                    this.LoadDataSuccess(r);
+                }).catch(error => {
+                    this.IsLoading = false;
+                    this.$message.error('Không thể kết nối tới máy chủ', 3);
+                    console.log(error);
+                });
             },
             ChangePageSize(current, size) {
                 this.Pagination.PageSize = size;

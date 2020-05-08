@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="ClientApp\views\categorys\lesson.vue" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="ClientApp\components\" />
     <Folder Include="ClientApp\data\" />
   </ItemGroup>
