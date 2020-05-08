@@ -45,6 +45,16 @@ namespace PriSchLecs.Api.Dtos
                     cfg.CreateMap<LectureModel, Lecture>();
                     #endregion
 
+                    #region Comment
+                    cfg.CreateMap<Comment, Comment>()
+                        .ForMember(dest => dest.Id, opt => opt.Ignore())
+                        .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
+                        .ForMember(dest => dest.UpdatedTime, opt => opt.Ignore());
+                    cfg.CreateMap<Comment, CommentModel>();
+                    cfg.CreateMap<Comment, CommentItem>();
+                    cfg.CreateMap<CommentModel, Comment>();
+                    #endregion
+
                     #region Category
                     cfg.CreateMap<Category, Category>()
                         .ForMember(dest => dest.Id, opt => opt.Ignore())

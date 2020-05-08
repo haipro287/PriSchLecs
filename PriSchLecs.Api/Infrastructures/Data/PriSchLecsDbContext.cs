@@ -23,6 +23,7 @@ namespace PriSchLecs.Api.Infrastructures.Data
             base.OnModelCreating(builder);
             builder
                 .RegisterEntityMapping<Lecture, LectureMap>()
+                .RegisterEntityMapping<Comment, CommentMap>()
                 .RegisterEntityMapping<Category, CategoryMap>()
                 .RegisterEntityMapping<CategoryLecture, CategoryLectureMap>();
 

@@ -47,6 +47,28 @@ namespace PriSchLecs.Api.Dtos
         }
         #endregion
 
+        #region Comment
+        public static CommentModel ToModel(this Comment entity)
+        {
+            return entity.MapTo<Comment, CommentModel>();
+        }
+
+        public static CommentItem ToItem(this Comment entity)
+        {
+            return entity.MapTo<Comment, CommentItem>();
+        }
+
+        public static Comment ToComment(this CommentModel model)
+        {
+            return model.MapTo<CommentModel, Comment>();
+        }
+
+        public static Comment ToComment(this Comment entity, Comment destination)
+        {
+            return entity.MapTo(destination);
+        }
+        #endregion
+
         #region Category
         public static CategoryModel ToModel(this Category entity)
         {

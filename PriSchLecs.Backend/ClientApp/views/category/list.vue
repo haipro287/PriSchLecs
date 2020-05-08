@@ -1,8 +1,8 @@
 ﻿<template>
     <!--<a-spin tip="Đang tải..." :spinning="IsLoading">-->
     <a-row>
-        <h5>Quản lý bài giảng</h5>
-        <b-card class="mt-3" footer-tag="footer"> <!--khung tìm kiếm-->
+        <h5>Quản lý danh mục</h5>
+        <b-card class="mt-3" footer-tag="footer"><!--khung tìm kiếm-->
             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-lg-3">
@@ -32,9 +32,9 @@
             <div class="card-header card-header-flex">
                 <div class="flex-column justify-content-center">
                     <!--d-flex-->
-                    <router-link to="/lecture/createorupdate/0">
+                    <router-link to="/category/createorupdate/0">
                         <a-button type="primary" icon="plus">
-                            Tạo bài giảng
+                            Tạo danh mục
                         </a-button>
                     </router-link>
                 </div>
@@ -47,7 +47,7 @@
                          bordered
                          :pagination="false">
                     <span slot="action" slot-scope="record">
-                        <router-link :to="{path:'/lecture/createorupdate/' + record.id}">
+                        <router-link :to="{path:'/category/createorupdate/' + record.id}">
                             <a-button class="btn btn-sm btn-primary mr-2">
                                 <a-icon type="edit" />
                                 Sửa
@@ -88,6 +88,8 @@
         </div>
     </a-row>
     <!--</a-spin>-->
+
+
 </template>
 
 <script>
@@ -124,20 +126,11 @@
                     title: 'ID',
                     dataIndex: 'id',
                 }, {
-                    title: 'Tên bài giảng',
+                    title: 'Tên danh mục',
                     dataIndex: 'name',
                 }, {
                     title: 'Mô tả ngắn',
                     dataIndex: 'description',
-                }, {
-                    title: 'Số lượt xem',
-                    dataIndex: 'views'
-                }, {
-                    title: 'Số lượt tải',
-                    dataIndex: 'downloads'
-                }, {
-                    title: 'Số bình luận',
-                    dataIndex: 'comments'
                 }, {
                     title: 'Ngày tạo',
                     dataIndex: 'createdTimeDisplay',
@@ -188,7 +181,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post("https://localhost:44356/api/Lecture/Search/", params).then(r => {
+                axios.post("https://localhost:44356/api/Category/search/", params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -216,12 +209,11 @@
             },
             DeleteProduct(id) {
                 if (confirm("Có thật sự muốn xóa?")) {
-                    axios.delete("https://localhost:44356/api/Lecture/Delete/" + id).then(response => {
+                    axios.delete("https://localhost:44356/api/Category/Delete/" + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadData();
                         }
-                        this.$message.success("Xóa thành công!")
                     });
                 }
             },

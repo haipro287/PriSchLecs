@@ -32,6 +32,7 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
         public Task<BaseResult> CreateOrUpdate(CategoryModel model)
         {
             var category = model.ToCategory();
+            category.UpdateCommonInt();
 
             if(category.Id > 0)
             {
@@ -82,6 +83,11 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
                     string keyword = search.Keyword;
                     keyword = keyword.Trim().ToLower();
                     query = query.Where(x => x.Name.Contains(keyword));
+                }
+                if (search.ParentId != null)
+                {
+                    int parentId = search.ParentId;
+                    query = query.Where(x => x.ParentId == parentId);
                 }
                 if (search.CreateStart != null)
                 {

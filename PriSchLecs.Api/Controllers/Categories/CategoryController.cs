@@ -21,9 +21,9 @@ namespace PriSchLecs.Api.Controllers.Categories
         }
 
         /// <summary>
-        /// API tìm kiếm bài giảng
+        /// API tìm kiếm danh mục
         /// </summary>
-        /// <param name="param">Tham số SmartTable (tìm kiếm theo tên (Keyword), phân trang, sắp xếp)</param>
+        /// <param name="param">Tham số SmartTable (tìm kiếm theo tên (Keyword), theo danh mục cha (ParentId), phân trang, sắp xếp)</param>
         /// <returns></returns>
         [HttpPost("Search")]
         public async Task<IActionResult> Search([FromBody]SmartTableParam param)
@@ -33,9 +33,9 @@ namespace PriSchLecs.Api.Controllers.Categories
         }
 
         /// <summary>
-        /// API lấy thông tin bài giảng theo Id
+        /// API lấy thông tin danh mục theo Id
         /// </summary>
-        /// <param name="id">Id bài giảng cần lấy</param>
+        /// <param name="id">Id danh mục cần lấy</param>
         /// <returns></returns>
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetById(int id)

@@ -1,9 +1,9 @@
 ﻿<template>
     <div>
-        <h5>Tạo / cập nhật bài giảng</h5>
+        <h5>Tạo / cập nhật danh mục</h5>
         <div class="row">
             <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="Thông tin bài giảng" key="1"> <!--tab sửa bài giảng-->
+                <a-tab-pane tab="Thông tin danh mục" key="1"><!--tab sửa danh mục-->
                     <a-form layout="vertical">
                         <div class="col-lg-12 text-right">
                             <a-button type="primary" html-type="button" icon="save" @click="SaveAndFinish">Lưu lại</a-button>
@@ -11,37 +11,33 @@
                             <a-button type="danger" html-type="button" icon="save" @click="Reset">Reset thông tin</a-button>
                         </div>
                         <div class="col">
-                            <a-form-item label="Tên bài giảng" class="mb-2">
-                                <a-input v-model="Model.name"
-                                         v-decorator="['Name', { rules: [{ required: true, message: 'Vui lòng nhập tên bài giảng!' }] }]" />
+                            <a-form-item label="Tên danh mục" class="mb-2">
+                                <a-input v-model="Model.name" 
+                                         v-decorator="['Name', { rules: [{ required: true, message: 'Vui lòng nhập tên danh mục!' }] }]" />
                             </a-form-item>
                         </div>
                         <div class="col">
                             <a-form-item label="Mô tả ngắn" class="mb-2">
                                 <a-textarea placeholder="Mô tả ngắn"
                                             v-model="Model.description"
-                                            v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn bài giảng!' }] }]"
+                                            v-decorator="['description', { rules: [{ required: true, message: 'Vui lòng nhập mô tả ngắn danh mục!' }] }]"
                                             :autosize="{ minRows: 3, maxRows: 6 }" />
-                            </a-form-item>
-                            <a-form-item label="Content">
-                                <ckeditor :editor="editor" v-model="Model.content" :config="editorConfig"></ckeditor>
                             </a-form-item>
                         </div>
                     </a-form>
                 </a-tab-pane>
-                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn danh mục" key="2"> <!--tab thêm danh mục-->
+                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn bài giảng" key="2"><!--tab thêm bài giảng-->
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
-                                <a-button class="btn btn-sm btn-primary mr-2" type="primary" @click="showModal">
-                                    <a-icon type="folder-add" />
-                                    Thêm danh mục
+                                <a-button type="primary" @click="showModal" icon="plus">
+                                    Thêm bài giảng
                                 </a-button>
-                                <a-modal title="Chọn danh mục"
+                                <a-modal title="Chọn bài giảng"
                                          :visible="visible"
                                          @ok="handleOk"
-                                         @cancel="handleCancel" width="1280px"> <!--bảng danh sách các danh mục để thêm-->
-                                    <a-row>
+                                         @cancel="handleCancel" width="1280px">
+                                    <a-row><!--bảng danh sách các bài giảng để thêm-->
                                         <b-card class="mt-3" footer-tag="footer">
                                             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                                                 <div class="row">
@@ -71,7 +67,7 @@
                                         <div class="card">
                                             <div class="card-header card-header-flex">
                                                 <div class="flex-column justify-content-center">
-                                                    <p>Danh sách danh mục</p>
+                                                    Danh sách bài giảng
                                                 </div>
                                             </div>
                                             <div class="card-body" style="padding:16px;">
@@ -82,7 +78,7 @@
                                                          bordered
                                                          :pagination="false">
                                                     <span slot="action" slot-scope="record">
-                                                        <a-button type="primary" icon="plus" @click="CreateConnect(record.id)">
+                                                        <a-button class="btn btn-sm btn-primary mr-2" type="primary" icon="plus" @click="CreateConnect(record.id)">
                                                             Thêm
                                                         </a-button>
                                                     </span>
@@ -118,34 +114,101 @@
                                 </a-modal>
                             </div>
                         </div>
-                        <div class="card-body" style="padding:16px;"> <!--danh sách các danh mục có sẵn của bài giảng-->
-                            <a-table :columns="Columns" :data-source="dataOfc">
-                                <span slot="action" slot-scope="record">
-                                    <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteConnect(record.id)">
-                                        <a-icon type="delete" />
-                                        Xóa
-                                    </a-button>
-                                </span>
-                            </a-table>
-                        </div> 
+                        <div class="card-body" style="padding:16px;">
+                            <a-row>
+                                <b-card class="mt-3" footer-tag="footer"><!--bảng danh sách các bài giảng có sẵn trong danh mục-->
+                                    <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-12 col-lg-3">
+                                                <a-form-item label="Từ khóa" class="mb-0">
+                                                    <a-input v-decorator="['Keyword']"
+                                                             placeholder="Từ khóa..." />
+                                                </a-form-item>
+                                            </div>
+                                            <div class="col-md-6 col-sm-12 col-lg-3">
+                                                <a-form-item label="Ngày tạo" class="mb-0">
+                                                    <a-range-picker :ranges="Ranges"
+                                                                    v-decorator="['CreatedTime']"
+                                                                    :placeholder="['Từ ngày', 'Đến ngày']" />
+                                                </a-form-item>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:10px;">
+                                            <div class="col-lg-12">
+                                                <a-button type="primary" html-type="submit" icon="search">
+                                                    Tìm kiếm
+                                                </a-button>
+                                            </div>
+                                        </div>
+                                    </a-form>
+                                </b-card>
+                                <div class="card">
+                                    <div class="card-header card-header-flex">
+                                        <div class="flex-column justify-content-center">
+                                            Danh sách bài giảng
+                                        </div>
+                                    </div>
+                                    <div class="card-body" style="padding:16px;">
+                                        <a-table :columns="Columns"
+                                                 :dataSource="dataOfl"
+                                                 :tableLayout="auto"
+                                                 :scroll="{}"
+                                                 bordered
+                                                 :pagination="false">
+                                            <span slot="action" slot-scope="record">
+                                                <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteConnect(record.id)">
+                                                    <a-icon type="delete" />
+                                                    Xóa
+                                                </a-button>
+
+                                            </span>
+                                            <span slot="callForPrice" slot-scope="record">
+                                                {{record.toString()}}
+                                            </span>
+                                        </a-table>
+                                        <a-pagination class="mt-2 ant-pagination ant-table-pagination"
+                                                      :total="Pagination.Total"
+                                                      :pageSize="Pagination.PageSize"
+                                                      :pageSizeOptions="PageSizeOptions"
+                                                      v-model="Pagination.PageIndex"
+                                                      showSizeChanger
+                                                      showQuickJumper
+                                                      :showTotal="(total, range) => `Từ ${range[0]} đến ${range[1]} của ${total} bản ghi`"
+                                                      @change="ChangePage"
+                                                      @showSizeChange="ChangePageSize"
+                                                      :locale="{items_per_page:' / trang',
+                                                                      jump_to:'Đến',
+                                                                      jump_to_confirm:'xác nhận',
+                                                                      next_3:'Đến 3 Trang Kế',
+                                                                      next_5:'Đến 5 Trang Kế',
+                                                                      next_page:'Trang Kế',
+                                                                      page:'',
+                                                                      prev_3:'Về 3 Trang Trước',
+                                                                      prev_5:'Về 5 Trang Trước',
+                                                                      prev_page:'Trang Trước',
+                                                                      }">
+                                        </a-pagination>
+                                    </div>
+                                </div>
+                            </a-row>
+                        </div>
                     </div>
                 </a-tab-pane>
             </a-tabs>
         </div>
-        
+
     </div>
 </template>
 <script>
     import axios from 'axios';
-    import moment from 'moment';
     import CKEditor from '@ckeditor/ckeditor5-build-classic';
-    
+    import moment from 'moment';
+
     export default {
         created() {
-            axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => {
+            axios.get("https://localhost:44356/api/Category/GetById/" + this.$route.params.id).then(r => {
                 this.Model.name = r.data.name;
                 this.Model.description = r.data.description;
-                this.Model.content = r.data.content;
                 this.Model.id = this.$route.params.id;
             }).then(() => {
                 this.CreateForm();
@@ -154,14 +217,13 @@
         },
         mounted() {
             this.LoadData();
-            this.LoadCOLData();
+            this.LoadLOCData();
         },
         data() {
             return {
                 Model: {
                     name: '',
                     description: "",
-                    content: '',
                     id: 0,
                 },
                 editor: CKEditor,
@@ -169,6 +231,8 @@
 
                 },
                 visible: false,
+
+                dataOfl: [],
 
                 FrmSearch: null,
                 IsLoading: false,
@@ -193,11 +257,20 @@
                     title: 'ID',
                     dataIndex: 'id',
                 }, {
-                    title: 'Tên danh mục',
+                    title: 'Tên bài giảng',
                     dataIndex: 'name',
                 }, {
                     title: 'Mô tả ngắn',
                     dataIndex: 'description',
+                }, {
+                    title: 'Số lượt xem',
+                    dataIndex: 'views'
+                }, {
+                    title: 'Số lượt tải',
+                    dataIndex: 'downloads'
+                }, {
+                    title: 'Số bình luận',
+                    dataIndex: 'comments'
                 }, {
                     title: 'Ngày tạo',
                     dataIndex: 'createdTimeDisplay',
@@ -207,14 +280,13 @@
                 }, {
                     title: 'Action',
                     scopedSlots: { customRender: 'action' },
-                    width: 330
+                    width: 240
                 },
-                ],
-
-                dataOfc: [],
+                ]
             }
         },
         methods: {
+            /* các hàm để bật tắt modal */
             showModal() {
                 this.visible = true;
             },
@@ -225,43 +297,53 @@
                 console.log('Clicked cancel button');
                 this.visible = false;
             },
+            /* các hàm sửa danh mục và hiển thị danh sách các bài giảng để thêm */
             CreateForm() {
                 let options = {
                     mapPropsToFields: () => {
                         return {
                             name: this.$form.createFormField({ value: this.Model.name, }),
-                            description: this.$form.createFormField({ value: this.Model.description }),
-                            content: this.$form.createFormField({ value: this.Model.content }),
-                            id: this.$form.createFormField({ value: this.Model.id }),
+                            description: this.$form.createFormField({ value: this.Model.description, }),
+                            id: this.$form.createFormField({ value: this.Model.id, }),
+
                         };
                     }
                 }
                 /*this.FrmProduct = this.$form.createForm(this, options);*/
             },
-            GetModel() {           
-                this.Model.name = this.FrmProduct.getFieldValue('Name');
-                this.Model.description = this.FrmProduct.getFieldValue('Description');
-                this.Model.id = this.$route.params.id;
+            GetModel() {  
+                this.Model.Name = this.FrmProduct.getFieldValue('Name');
+                this.Model.ShortDescription = this.FrmProduct.getFieldValue('ShortDescription');
+                this.Model.Sku = this.FrmProduct.getFieldValue('Sku');
+                this.Model.Price = this.FrmProduct.getFieldValue('Price');
+                this.Model.OldPrice = this.FrmProduct.getFieldValue('OldPrice');
+                this.Model.CallForPrice = this.FrmProduct.getFieldValue('CallForPrice');
+                this.Model.Id = this.$route.params.id;
             },
             async SaveAndFinish() {
-                /*this.GetModel();*/
-                axios.post("https://localhost:44356/api/lecture/createorupdate/", this.Model).then(r => {
-                    if (r.data.result == 1) {
-                        this.$message.success("Lưu dữ liệu thành công!");
-                        this.$router.replace("/lecture/list");
-                    }
-                   
-                })
-            },
-            Save() {
-                /*this.GetModel();*/
-                axios.post("https://localhost:44356/api/lecture/createorupdate/", this.Model).then(r => {
+                /*this.GetModel();*/     
+                axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
                     }
                     else {
-                        this.$message.success('Lưu dữ liệu thành công!');
-                        this.$router.replace("/lecture/createorupdate/" + r.data.id);
+                        this.$message.success('Lưu dữ liệu thành công', 3);
+                        this.$router.replace("/category/list");
+                    }
+                }).catch(error => {
+                    this.$message.error('Không thể kết nối tới máy chủ', 3);
+                    console.log(error);
+                });
+            },
+            Save() {
+                /*this.GetModel();*/ 
+                axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
+                    if (r.data.result != 1) {
+                        this.$message.error(r.data.message);
+                    }
+                    else {
+                        this.$message.success('Lưu dữ liệu thành công!', 3);
+                        this.$router.replace("/category/createorupdate/" + r.data.id);
                     }
                 }).catch(error => {
                     this.$message.error('Đã xảy ra lỗi!', 3);
@@ -270,17 +352,13 @@
             },
             Reset() {
                 if (confirm("Có thực sự muốn reset?")) {
-                    axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => {
+                    axios.get("https://localhost:44356/api/category/getbyid/" + this.$route.params.id).then(r => {
                         this.Model.name = r.data.name;
                         this.Model.description = r.data.description;
-                        this.Model.content = r.data.content;
                         this.Model.id = this.$route.params.id;
                     })
                     this.$message.success('Reset thành công', 3);
-                }
-            },
-            OnChange(e) {
-                this.Model.CallForPrice = !this.Model.CallForPrice;
+                }     
             },
 
             moment,
@@ -295,7 +373,6 @@
                 }
                 this.FrmSearch = this.$form.createForm(this, options);
             },
-            //Events
             FrmSearchSubmit(e) {
                 e.preventDefault();
                 this.Pagination.PageIndex = 1;
@@ -318,7 +395,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post("https://localhost:44356/api/Category/search/", params).then(r => {
+                axios.post("https://localhost:44356/api/Lecture/Search/", params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -344,6 +421,16 @@
                     this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
+            DeleteProduct(id) {
+                if (confirm("Có thật sự muốn xóa?")) {
+                    axios.delete("https://localhost:44356/api/Lecture/Delete/" + id).then(response => {
+                        console.log(response);
+                        if (response.data.result == 1) {
+                            this.LoadData();
+                        }
+                    });
+                }
+            },
             ChangePageSize(current, size) {
                 this.Pagination.PageSize = size;
                 this.LoadData();
@@ -351,39 +438,60 @@
             ChangePage(page, pageSize) {
                 this.LoadData();
             },
-
-            /* các hàm load danh sách của bài giảng */
-            LoadCOLData() {
+            /* các hàm hiển thị danh sách bài giảng trong danh mục */
+            GetLOCParam() {
+                return {
+                    Pagination: this.Pagination,
+                    Sort: this.Sort,
+                    Search: {
+                        PredicateObject: {
+                            CategoryId: this.$route.params.id,
+                            Keyword: this.FrmSearch.getFieldValue('Keyword'),
+                            CreateStart: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[0]).format() : null,
+                            CreateEnd: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[1]).format() : null,
+                        }
+                    }
+                }
+            },
+            LoadLOCData() {
                 this.IsLoading = true;
-                axios.get("https://localhost:44356/api/CategoryLecture/GetCategoryByLectureId/" + this.$route.params.id).then(r => {
+                var params = this.GetLOCParam();
+                console.log(params);
+                axios.post("https://localhost:44356/api/CategoryLecture/GetLectureByCategoryId", params).then(r => {
                     this.IsLoading = false;
-                    this.LoadCOLDataSuccess(r);
+                    this.LoadLOCDataSuccess(r);
                 }).catch(error => {
                     this.IsLoading = false;
                     this.$message.error('Không thể kết nối tới máy chủ', 3);
                     console.log(error);
                 });
             },
-            LoadCOLDataSuccess(r) {
-                this.dataOfc = [];
+            LoadLOCDataSuccess(r) {
+                this.dataOfl = [];
                 console.log(r);
-                if (r.data) {
-                    this.dataOfc = r.data;
+                if (r.data.items) {
+                    this.Pagination.Total = r.data.totalRecord;
+                    this.dataOfl = r.data.items;
+                    let key = 1;
+                    this.dataOfl.forEach(item => {
+                        item.key = (this.Pagination.PageIndex - 1) * this.Pagination.PageSize + key;
+                        key = key + 1;
+                    });
                 }
                 else {
                     this.IsLoading = false;
                     this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
-            /* các hàm tạo và xóa liên kết */
+            /* các hàm tạo xóa liên kết*/
             CreateConnect(id) {
                 var param = {
-                    categoryId: id,
-                    lectureId: this.$route.params.id,
+                    categoryId: this.$route.params.id,
+                    lectureId: id,
                 };
-                if (confirm("Thêm danh mục " + id + "?")) {
+                if (confirm("Thêm bài giảng " + id + "?")) {
                     axios.post("https://localhost:44356/api/CategoryLecture/Create/", param).then(r => {
-                        this.LoadCOLData();
+                        this.LoadLOCData();
                     }).catch(error => {
                         this.$message.error('Lỗi khi thêm liên kết', 3);
                         console.log(error);
@@ -392,10 +500,10 @@
             },
             DeleteConnect(id) {
                 if (confirm("Có thật sự muốn xóa liên kết?")) {
-                    axios.delete("https://localhost:44356/api/CategoryLecture/Delete/" + id + '-' + this.$route.params.id).then(response => {
+                    axios.delete("https://localhost:44356/api/CategoryLecture/Delete/" + this.$route.params.id + '-' + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
-                            this.LoadCOLData();
+                            this.LoadLOCData();
                         }
                     });
                 }
