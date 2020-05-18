@@ -16,6 +16,8 @@
     <Compile Remove="Migrations\20200502112506_PriSchLecs.1.20.5.1.Designer.cs" />
     <Compile Remove="Migrations\20200504191023_PriSchLecs.1.20.5.2.cs" />
     <Compile Remove="Migrations\20200504191023_PriSchLecs.1.20.5.2.Designer.cs" />
+    <Compile Remove="Migrations\20200508171251_PriSchLecs.1.20.5.3.cs" />
+    <Compile Remove="Migrations\20200508171251_PriSchLecs.1.20.5.3.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,12 +6,17 @@ using PriSchLecs.Api.Domains.BaseEntities;
 
 namespace PriSchLecs.Api.Domains.Files
 {
-    public class File: BaseEntityByInt
+    public class File : BaseEntityByInt
     {
         /// <summary>
         /// Tên file
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Tên File lưu trên server (đã hash)
+        /// </summary>
+        public string HashName { get; set; }
 
         /// <summary>
         /// Đường dẫn

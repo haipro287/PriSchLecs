@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,23 @@ namespace PriSchLecs.Api.Controllers.Files
         {
             var result = await FileService.Upload(model);
             return Ok(result);
+        }
+
+        /// <summary>
+        /// API tải file từ server
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("Download/{id}")]
+        public async Task<IActionResult> Download(int id)
+        {
+            var result = await FileService.Download(id);
+            if (result.File == null)
+            {
+                return Ok(result);
+            }
+            result.File.Position = 0;
+            return File(result.File, "application/octet-stream", result.Name);
         }
     }
 }

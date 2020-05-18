@@ -1,18 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PriSchLecs.Api.Dtos.Models.Files
+namespace PriSchLecs.Api.Dtos.Items.Files
 {
-    public class FileModel
+    public class FileItem: BaseItemInt
     {
-        /// <summary>
-        /// File được upload
-        /// </summary>
-        public IFormFile File { get; set; }
-
         /// <summary>
         /// Tên file
         /// </summary>
@@ -22,5 +16,15 @@ namespace PriSchLecs.Api.Dtos.Models.Files
         /// Đường dẫn
         /// </summary>
         public string Path { get; set; }
+
+        /// <summary>
+        /// Ổ
+        /// </summary>
+        public string Drive { get; set; }
+
+        /// <summary>
+        /// Tên miền
+        /// </summary>
+        public string Domain { get; set; }
     }
 }

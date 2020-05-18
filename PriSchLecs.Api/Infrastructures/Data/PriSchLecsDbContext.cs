@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PriSchLecs.Api.Domains.Categories;
+using PriSchLecs.Api.Domains.Files;
 using PriSchLecs.Api.Domains.Lectures;
 using PriSchLecs.Api.Infrastructures.Data.EntityMapping;
 using PriSchLecs.Api.Infrastructures.Data.EntityMapping.Categories;
+using PriSchLecs.Api.Infrastructures.Data.EntityMapping.Files;
 using PriSchLecs.Api.Infrastructures.Data.EntityMapping.Lectures;
 
 namespace PriSchLecs.Api.Infrastructures.Data
@@ -25,7 +27,8 @@ namespace PriSchLecs.Api.Infrastructures.Data
                 .RegisterEntityMapping<Lecture, LectureMap>()
                 .RegisterEntityMapping<Comment, CommentMap>()
                 .RegisterEntityMapping<Category, CategoryMap>()
-                .RegisterEntityMapping<CategoryLecture, CategoryLectureMap>();
+                .RegisterEntityMapping<CategoryLecture, CategoryLectureMap>()
+                .RegisterEntityMapping<File, FIleMap>();
 
         }
     }

@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using PriSchLecs.Api.Domains.Categories;
+using PriSchLecs.Api.Domains.Files;
 using PriSchLecs.Api.Domains.Lectures;
 using PriSchLecs.Api.Dtos.Items.Categories;
+using PriSchLecs.Api.Dtos.Items.Files;
 using PriSchLecs.Api.Dtos.Items.Lectures;
 using PriSchLecs.Api.Dtos.Models.Categories;
+using PriSchLecs.Api.Dtos.Models.Files;
 using PriSchLecs.Api.Dtos.Models.Lectures;
 
 namespace PriSchLecs.Api.Dtos
@@ -72,6 +75,16 @@ namespace PriSchLecs.Api.Dtos
                     cfg.CreateMap<CategoryLecture, CategoryLectureModel>();
                     cfg.CreateMap<CategoryLecture, CategoryLectureItem>();
                     cfg.CreateMap<CategoryLectureModel, CategoryLecture>();
+                    #endregion
+
+                    #region Files
+                    cfg.CreateMap<File, File>()
+                        .ForMember(dest => dest.Id, opt => opt.Ignore())
+                        .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
+                        .ForMember(dest => dest.UpdatedTime, opt => opt.Ignore());
+                    cfg.CreateMap<File, FileModel>();
+                    cfg.CreateMap<File, FileItem>();
+                    cfg.CreateMap<FileModel, File>();
                     #endregion
                 });
 
