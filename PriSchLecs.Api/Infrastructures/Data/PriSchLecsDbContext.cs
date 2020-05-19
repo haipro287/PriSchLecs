@@ -28,8 +28,8 @@ namespace PriSchLecs.Api.Infrastructures.Data
                 .RegisterEntityMapping<Comment, CommentMap>()
                 .RegisterEntityMapping<Category, CategoryMap>()
                 .RegisterEntityMapping<CategoryLecture, CategoryLectureMap>()
-                .RegisterEntityMapping<File, FIleMap>();
-
+                .RegisterEntityMapping<File, FIleMap>()
+                .RegisterEntityMapping<LectureFile, LectureFileMap>();
         }
     }
 }

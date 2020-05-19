@@ -86,6 +86,15 @@ namespace PriSchLecs.Api.Dtos
                     cfg.CreateMap<File, FileItem>();
                     cfg.CreateMap<FileModel, File>();
                     #endregion
+
+                    #region lectureFile
+                    cfg.CreateMap<LectureFile, LectureFile>()
+                        .ForMember(dest => dest.CreatedTime, opt => opt.Ignore())
+                        .ForMember(dest => dest.UpdatedTime, opt => opt.Ignore());
+                    cfg.CreateMap<LectureFile, LectureFileModel>();
+                    cfg.CreateMap<LectureFile, LectureFileItem>();
+                    cfg.CreateMap<LectureFileModel, LectureFile>();
+                    #endregion
                 });
 
                 _mapper = _mapperConfiguration.CreateMapper();

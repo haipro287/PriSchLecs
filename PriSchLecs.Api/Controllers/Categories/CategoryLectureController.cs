@@ -12,7 +12,7 @@ namespace PriSchLecs.Api.Controllers.Categories
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CategoryLectureController: ControllerBase
+    public class CategoryLectureController : ControllerBase
     {
         private readonly ICategoryLectureService CategoryLectureService;
 
@@ -63,8 +63,8 @@ namespace PriSchLecs.Api.Controllers.Categories
         /// </summary>
         /// <param name="param">Tham số SmartTable tìm kiếm theo Id danh mục (CategoryId), theo từ khóa trong tên(Keyword), phân trang, sắp xếp</param>
         /// <returns></returns>
-       [HttpPost("GetLectureByCategoryId/")]
-       public async Task<IActionResult> GetLectureByCategoryId([FromBody] SmartTableParam param)
+        [HttpPost("GetLectureByCategoryId/")]
+        public async Task<IActionResult> GetLectureByCategoryId([FromBody] SmartTableParam param)
         {
             var result = await CategoryLectureService.GetLecture(param);
             return Ok(result);

@@ -137,5 +137,27 @@ namespace PriSchLecs.Api.Dtos
             return entity.MapTo(destination);
         }
         #endregion
+
+        #region LectureFile
+        public static LectureFileModel ToModel(this LectureFile entity)
+        {
+            return entity.MapTo<LectureFile, LectureFileModel>();
+        }
+
+        public static LectureFileItem ToItem(this LectureFile entity)
+        {
+            return entity.MapTo<LectureFile, LectureFileItem>();
+        }
+
+        public static LectureFile ToLectureFile(this LectureFileModel model)
+        {
+            return model.MapTo<LectureFileModel, LectureFile>();
+        }
+
+        public static LectureFile ToLectureFile(this LectureFile entity, LectureFile destination)
+        {
+            return entity.MapTo(destination);
+        }
+        #endregion
     }
 }

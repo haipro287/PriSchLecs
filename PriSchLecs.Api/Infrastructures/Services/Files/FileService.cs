@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using PriSchLecs.Api.Dtos;
+using PriSchLecs.Api.Dtos.Items.Files;
 using PriSchLecs.Api.Dtos.Models.Files;
 using PriSchLecs.Api.Dtos.Results;
+using PriSchLecs.Api.Infrastructure.SmartTable;
 using PriSchLecs.Api.Infrastructures.Repositories;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,10 @@ namespace PriSchLecs.Api.Infrastructures.Services.Files
         Task<BaseResult> Upload(FileModel model);
 
         Task<DownloadResult> Download(int id);
+
+        Task<SmartTableResult<FileItem>> Search(SmartTableParam param);
+
+        Task<BaseResult> Delete(int id);
     }
 
     public class FileService : IFileService
@@ -55,7 +62,7 @@ namespace PriSchLecs.Api.Infrastructures.Services.Files
                     else
                     {
                         //set new name if exists
-                        model.Name = string.IsNullOrEmpty(model.Name) ? (model.File.FileName + extension) : (model.Name + extension);
+                        model.Name = string.IsNullOrEmpty(model.Name) ? (model.File.FileName) : (model.Name + extension);
 
                         //get hashed name
                         var hashName = model.File.FileName.GetHashCode().ToString() + extension;
@@ -112,9 +119,10 @@ namespace PriSchLecs.Api.Infrastructures.Services.Files
                 result.Message = "Không tìm thấy file";
                 return result;
             }
-            var path = string.IsNullOrEmpty(file.Path)? Path.Combine(WebHostEnvironment.WebRootPath, "upload", file.HashName) :Path.Combine(WebHostEnvironment.WebRootPath, "upload", file.Path, file.HashName);
+            var path = string.IsNullOrEmpty(file.Path) ? Path.Combine(WebHostEnvironment.WebRootPath, "upload", file.HashName) : Path.Combine(WebHostEnvironment.WebRootPath, "upload", file.Path, file.HashName);
             if (!File.Exists(path))
             {
+                await Delete(file.Id);
                 result.Result = Result.Failed;
                 result.Message = "Không tìm thấy file";
                 return result;
@@ -127,6 +135,60 @@ namespace PriSchLecs.Api.Infrastructures.Services.Files
                 result.Name = file.Name;
             }
 
+            return result;
+        }
+
+        public async Task<SmartTableResult<FileItem>> Search(SmartTableParam param)
+        {
+            var query = FileRepository.Query();
+            if (param.Search.PredicateObject != null)
+            {
+                dynamic search = param.Search.PredicateObject;
+                if (search.Keyword != null)
+                {
+                    string keyword = search.Keyword;
+                    keyword = keyword.Trim().ToLower();
+                    query = query.Where(x => x.Name.Contains(keyword));
+                }
+                if (search.CreateStart != null)
+                {
+                    DateTime createStart = DateTime.Parse(search.CreateStart.ToString());
+                    DateTime startOfDay = createStart.Date;
+                    query = query.Where(x => x.CreatedTime >= startOfDay);
+                }
+
+                if (search.CreateEnd != null)
+                {
+                    DateTime createEnd = DateTime.Parse(search.CreateEnd.ToString());
+                    DateTime endOfDay = createEnd.Date.AddDays(1).AddTicks(-1);
+                    query = query.Where(x => x.CreatedTime <= endOfDay);
+                }
+            }
+
+            //param.Sort = new Sort() { Predicate = "Id", Reverse = false };
+            var gridData = query.ToSmartTableResult(param, x => x.ToItem());
+            return gridData;
+        }
+
+        public async Task<BaseResult> Delete(int id)
+        {
+            var result = new BaseResult();
+            var fileForDeletion = FileRepository.GetById(id);
+            if (fileForDeletion == null)
+            {
+                result.Result = Result.Failed;
+                result.Message = "Không tìm thấy file yêu cầu";
+                return result;
+            }
+            try
+            {
+                await FileRepository.DeleteAsync(fileForDeletion);
+            }
+            catch (Exception e)
+            {
+                result.Result = Result.SystemError;
+                result.Message = e.ToString();
+            }
             return result;
         }
     }

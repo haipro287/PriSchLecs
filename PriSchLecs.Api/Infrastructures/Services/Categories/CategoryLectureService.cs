@@ -76,13 +76,13 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
             return result;
         }
 
-        public async Task<BaseResult> Delete(int categoryId, int LectureId)
+        public async Task<BaseResult> Delete(int categoryId, int lectureId)
         {
             var result = new BaseResult();
 
             var instantForDeletion = CategoryLectureRepository.Query().FirstOrDefault(x =>
                 x.CategoryId == categoryId
-                && x.LectureId == LectureId);
+                && x.LectureId == lectureId);
 
             if (instantForDeletion == null)
             {
