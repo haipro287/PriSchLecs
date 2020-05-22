@@ -26,7 +26,7 @@
                         </div>
                     </a-form>
                 </a-tab-pane>
-                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn bài giảng" key="2"><!--tab thêm bài giảng-->
+                <a-tab-pane :disabled="$route.params.id==0" tab="Tùy chọn bài giảng" key="2"><!--tab thêm bài giảng-->
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
@@ -203,10 +203,11 @@
     import axios from 'axios';
     import CKEditor from '@ckeditor/ckeditor5-build-classic';
     import moment from 'moment';
+    import api from './categoryApi';
 
     export default {
         created() {
-            axios.get("https://localhost:44356/api/Category/GetById/" + this.$route.params.id).then(r => {
+            axios.get(api.getById + this.$route.params.id).then(r => {
                 this.Model.name = r.data.name;
                 this.Model.description = r.data.description;
                 this.Model.id = this.$route.params.id;
@@ -321,8 +322,8 @@
                 this.Model.Id = this.$route.params.id;
             },
             async SaveAndFinish() {
-                /*this.GetModel();*/     
-                axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
+                /*this.GetModel();*/
+                axios.post(api.createOrUpdate, this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
                     }
@@ -336,8 +337,8 @@
                 });
             },
             Save() {
-                /*this.GetModel();*/ 
-                axios.post("https://localhost:44356/api/Category/createorupdate/", this.Model).then(r => {
+                /*this.GetModel();*/
+                axios.post(api.createOrUpdate, this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
                     }
@@ -352,7 +353,7 @@
             },
             Reset() {
                 if (confirm("Có thực sự muốn reset?")) {
-                    axios.get("https://localhost:44356/api/category/getbyid/" + this.$route.params.id).then(r => {
+                    axios.get(api.getById + this.$route.params.id).then(r => {
                         this.Model.name = r.data.name;
                         this.Model.description = r.data.description;
                         this.Model.id = this.$route.params.id;
@@ -395,7 +396,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post("https://localhost:44356/api/Lecture/Search/", params).then(r => {
+                axios.post(api.list, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -423,7 +424,7 @@
             },
             DeleteProduct(id) {
                 if (confirm("Có thật sự muốn xóa?")) {
-                    axios.delete("https://localhost:44356/api/Lecture/Delete/" + id).then(response => {
+                    axios.delete(api.delete + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadData();
@@ -457,7 +458,7 @@
                 this.IsLoading = true;
                 var params = this.GetLOCParam();
                 console.log(params);
-                axios.post("https://localhost:44356/api/CategoryLecture/GetLectureByCategoryId", params).then(r => {
+                axios.post(api.getLectureByCategoryId, params).then(r => {
                     this.IsLoading = false;
                     this.LoadLOCDataSuccess(r);
                 }).catch(error => {
@@ -490,7 +491,7 @@
                     lectureId: id,
                 };
                 if (confirm("Thêm bài giảng " + id + "?")) {
-                    axios.post("https://localhost:44356/api/CategoryLecture/Create/", param).then(r => {
+                    axios.post(api.createCategoryLecture, param).then(r => {
                         this.LoadLOCData();
                     }).catch(error => {
                         this.$message.error('Lỗi khi thêm liên kết', 3);
@@ -500,7 +501,7 @@
             },
             DeleteConnect(id) {
                 if (confirm("Có thật sự muốn xóa liên kết?")) {
-                    axios.delete("https://localhost:44356/api/CategoryLecture/Delete/" + this.$route.params.id + '-' + id).then(response => {
+                    axios.delete(api.deleteCategoryLecture + this.$route.params.id + '-' + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadLOCData();

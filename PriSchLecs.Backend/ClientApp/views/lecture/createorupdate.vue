@@ -3,7 +3,8 @@
         <h5>Tạo / cập nhật bài giảng</h5>
         <div class="row">
             <a-tabs defaultActiveKey="1">
-                <a-tab-pane tab="Thông tin bài giảng" key="1"> <!--tab sửa bài giảng-->
+                <a-tab-pane tab="Thông tin bài giảng" key="1">
+                    <!--tab sửa bài giảng-->
                     <a-form layout="vertical">
                         <div class="col-lg-12 text-right">
                             <a-button type="primary" html-type="button" icon="save" @click="SaveAndFinish">Lưu lại</a-button>
@@ -29,7 +30,8 @@
                         </div>
                     </a-form>
                 </a-tab-pane>
-                <a-tab-pane v-if="$route.params.id!=0" tab="Tùy chọn danh mục" key="2"> <!--tab thêm danh mục-->
+                <a-tab-pane :disabled="$route.params.id==0" tab="Tùy chọn danh mục" key="2">
+                    <!--tab thêm danh mục-->
                     <div class="card">
                         <div class="card-header card-header-flex">
                             <div class="flex-column justify-content-center">
@@ -40,7 +42,8 @@
                                 <a-modal title="Chọn danh mục"
                                          :visible="visible"
                                          @ok="handleOk"
-                                         @cancel="handleCancel" width="1280px"> <!--bảng danh sách các danh mục để thêm-->
+                                         @cancel="handleCancel" width="1280px">
+                                    <!--bảng danh sách các danh mục để thêm-->
                                     <a-row>
                                         <b-card class="mt-3" footer-tag="footer">
                                             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
@@ -118,8 +121,9 @@
                                 </a-modal>
                             </div>
                         </div>
-                        <div class="card-body" style="padding:16px;"> <!--danh sách các danh mục có sẵn của bài giảng-->
-                            <a-table :columns="Columns" :data-source="dataOfc">
+                        <div class="card-body" style="padding:16px;">
+                            <!--danh sách các danh mục có sẵn của bài giảng-->
+                            <a-table :columns="Columns" :data-source="dataOfc" bordered>
                                 <span slot="action" slot-scope="record">
                                     <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteConnect(record.id)">
                                         <a-icon type="delete" />
@@ -127,22 +131,33 @@
                                     </a-button>
                                 </span>
                             </a-table>
-                        </div> 
+                        </div>
                     </div>
+                </a-tab-pane>
+                <a-tab-pane :disabled="$route.params.id==0" tab="Tùy chọn tệp" key="3">
+                    <!--tab thêm tệp-->
+                    <listFile></listFile>
+                </a-tab-pane>
+                <a-tab-pane :disabled="$route.params.id==0" tab="Bình luận" key="4">
+                    <!--tab bình luận-->
+                    <comment></comment>
                 </a-tab-pane>
             </a-tabs>
         </div>
-        
+
     </div>
 </template>
 <script>
     import axios from 'axios';
     import moment from 'moment';
     import CKEditor from '@ckeditor/ckeditor5-build-classic';
-    
+    import listFile from "./file/listFile"
+    import comment from "./comment/comment"
+    import api from './lectureApi';
+
     export default {
         created() {
-            axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => {
+            axios.get(api.getById + this.$route.params.id).then(r => {
                 this.Model.name = r.data.name;
                 this.Model.description = r.data.description;
                 this.Model.content = r.data.content;
@@ -207,7 +222,6 @@
                 }, {
                     title: 'Action',
                     scopedSlots: { customRender: 'action' },
-                    width: 330
                 },
                 ],
 
@@ -238,24 +252,24 @@
                 }
                 /*this.FrmProduct = this.$form.createForm(this, options);*/
             },
-            GetModel() {           
+            GetModel() {
                 this.Model.name = this.FrmProduct.getFieldValue('Name');
                 this.Model.description = this.FrmProduct.getFieldValue('Description');
                 this.Model.id = this.$route.params.id;
             },
             async SaveAndFinish() {
                 /*this.GetModel();*/
-                axios.post("https://localhost:44356/api/lecture/createorupdate/", this.Model).then(r => {
+                axios.post(api.createOrUpdate, this.Model).then(r => {
                     if (r.data.result == 1) {
                         this.$message.success("Lưu dữ liệu thành công!");
                         this.$router.replace("/lecture/list");
                     }
-                   
+
                 })
             },
             Save() {
                 /*this.GetModel();*/
-                axios.post("https://localhost:44356/api/lecture/createorupdate/", this.Model).then(r => {
+                axios.post(api.createOrUpdate, this.Model).then(r => {
                     if (r.data.result != 1) {
                         this.$message.error(r.data.message);
                     }
@@ -270,7 +284,7 @@
             },
             Reset() {
                 if (confirm("Có thực sự muốn reset?")) {
-                    axios.get("https://localhost:44356/api/lecture/getbyid/" + this.$route.params.id).then(r => {
+                    axios.get(api.getById + this.$route.params.id).then(r => {
                         this.Model.name = r.data.name;
                         this.Model.description = r.data.description;
                         this.Model.content = r.data.content;
@@ -318,7 +332,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post("https://localhost:44356/api/Category/search/", params).then(r => {
+                axios.post(api.list, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -355,7 +369,7 @@
             /* các hàm load danh sách của bài giảng */
             LoadCOLData() {
                 this.IsLoading = true;
-                axios.get("https://localhost:44356/api/CategoryLecture/GetCategoryByLectureId/" + this.$route.params.id).then(r => {
+                axios.get(api.getCategoryByLectureId + this.$route.params.id).then(r => {
                     this.IsLoading = false;
                     this.LoadCOLDataSuccess(r);
                 }).catch(error => {
@@ -382,7 +396,7 @@
                     lectureId: this.$route.params.id,
                 };
                 if (confirm("Thêm danh mục " + id + "?")) {
-                    axios.post("https://localhost:44356/api/CategoryLecture/Create/", param).then(r => {
+                    axios.post(api.createCategoryLecture, param).then(r => {
                         this.LoadCOLData();
                     }).catch(error => {
                         this.$message.error('Lỗi khi thêm liên kết', 3);
@@ -392,7 +406,7 @@
             },
             DeleteConnect(id) {
                 if (confirm("Có thật sự muốn xóa liên kết?")) {
-                    axios.delete("https://localhost:44356/api/CategoryLecture/Delete/" + id + '-' + this.$route.params.id).then(response => {
+                    axios.delete(api.deleteCategoryLecture + id + '-' + this.$route.params.id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadCOLData();
@@ -402,7 +416,8 @@
             },
         },
         components: {
-
+            listFile,
+            comment
         }
     }
 </script>

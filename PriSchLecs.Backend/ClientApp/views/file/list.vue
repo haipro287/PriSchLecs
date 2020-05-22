@@ -1,8 +1,9 @@
 ﻿<template>
     <!--<a-spin tip="Đang tải..." :spinning="IsLoading">-->
     <a-row>
-        <h5>Quản lý danh mục</h5>
-        <b-card class="mt-3" footer-tag="footer"><!--khung tìm kiếm-->
+        <h5>Quản lý tệp</h5>
+        <b-card class="mt-3" footer-tag="footer">
+            <!--khung tìm kiếm-->
             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-lg-3">
@@ -28,15 +29,16 @@
                 </div>
             </a-form>
         </b-card>
-        <div class="card"><!--Danh sách-->
+        <div class="card">
+            <!--Danh sách-->
             <div class="card-header card-header-flex">
                 <div class="flex-column justify-content-center">
                     <!--d-flex-->
-                    <router-link to="/category/createorupdate/0">
+                    <!--<router-link to="/lecture/createorupdate/0">
                         <a-button type="primary" icon="plus">
-                            Tạo danh mục
+                            Tạo bài giảng
                         </a-button>
-                    </router-link>
+                    </router-link>-->
                 </div>
             </div>
             <div class="card-body" style="padding:16px;">
@@ -47,20 +49,22 @@
                          bordered
                          :pagination="false">
                     <span slot="action" slot-scope="record">
-                        <router-link :to="{path:'/category/createorupdate/' + record.id}">
+
+                        <a :href="Api.download + record.id">
                             <a-button class="btn btn-sm btn-primary mr-2">
-                                <a-icon type="edit" />
-                                Sửa
+                                <a-icon type="download" />Tải xuống
                             </a-button>
-                        </router-link>
+                        </a>
+
                         <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
                             <a-icon type="delete" />
                             Xóa
                         </a-button>
                     </span>
-                    <!--<span slot="callForPrice" slot-scope="record">
-                        {{record.toString()}}
-                    </span>-->
+                    <span slot="name" slot-scope="record">
+                        <a :href="Api.download + record.id">{{record.name}}</a>
+
+                    </span>
                 </a-table>
                 <a-pagination class="mt-2 ant-pagination ant-table-pagination"
                               :total="Pagination.Total"
@@ -88,15 +92,12 @@
         </div>
     </a-row>
     <!--</a-spin>-->
-
-
 </template>
 
 <script>
+    import api from "./api"
     import axios from 'axios';
     import moment from 'moment';
-    import api from './categoryApi';
-
     export default {
         created() {
             this.CreateFormSearch();
@@ -106,6 +107,7 @@
         },
         data() {
             return {
+                Api: api,
                 FrmSearch: null,
                 IsLoading: false,
                 Ranges: { 'Hôm nay': [moment(), moment()], 'Hôm qua': [moment().add('days', -1), moment().add('days', -1)], 'Tuần này': [moment().startOf('isoWeek'), moment().endOf('isoWeek')], 'Tuần trước': [moment().add(-1, 'weeks').startOf('isoWeek'), moment().add(-1, 'weeks').endOf('isoWeek')], 'Tháng này': [moment().startOf('month'), moment().endOf('month')], 'Tháng trước': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')] },
@@ -128,11 +130,11 @@
                     title: 'ID',
                     dataIndex: 'id',
                 }, {
-                    title: 'Tên danh mục',
-                    dataIndex: 'name',
+                    title: 'Tên file',
+                    scopedSlots: { customRender: 'name' },
                 }, {
-                    title: 'Mô tả ngắn',
-                    dataIndex: 'description',
+                    title: 'Đường dẫn',
+                    dataIndex: 'path',
                 }, {
                     title: 'Ngày tạo',
                     dataIndex: 'createdTimeDisplay',
@@ -183,7 +185,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post(api.list, params).then(r => {
+                axios.post(api.search, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -216,6 +218,7 @@
                         if (response.data.result == 1) {
                             this.LoadData();
                         }
+                        this.$message.success("Xóa thành công!")
                     });
                 }
             },
@@ -225,7 +228,7 @@
             },
             ChangePage(page, pageSize) {
                 this.LoadData();
-            }
+            },
         }
     }
 </script>
