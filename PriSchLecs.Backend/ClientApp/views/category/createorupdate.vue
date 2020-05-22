@@ -396,7 +396,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post(api.list, params).then(r => {
+                axios.post(api.listLecture, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {

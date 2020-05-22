@@ -7,5 +7,6 @@ export default {
     getById: baseApi.baseApi + "category/getbyid/",
     getLectureByCategoryId: baseApi.baseApi + "categorylecture/getlecturebycategoryid/",
     deleteCategoryLecture: baseApi.baseApi + "categorylecture/delete/",
-    createCategoryLecture: baseApi.baseApi + "categorylecture/create/"
+    createCategoryLecture: baseApi.baseApi + "categorylecture/create/",
+    listLecture: baseApi.baseApi + "lecture/search/"
 }
