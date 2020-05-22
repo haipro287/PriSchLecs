@@ -93,6 +93,8 @@
 <script>
     import axios from 'axios';
     import moment from 'moment';
+    import api from './lectureApi';
+
     export default {
         created() {
             this.CreateFormSearch();
@@ -188,7 +190,7 @@
                 this.IsLoading = true;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post("https://localhost:44356/api/Lecture/Search/", params).then(r => {
+                axios.post(api.list, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -216,7 +218,7 @@
             },
             DeleteProduct(id) {
                 if (confirm("Có thật sự muốn xóa?")) {
-                    axios.delete("https://localhost:44356/api/Lecture/Delete/" + id).then(response => {
+                    axios.delete(api.delete + id).then(response => {
                         console.log(response);
                         if (response.data.result == 1) {
                             this.LoadData();

@@ -1,3 +1,5 @@
+import { Upload } from 'ant-design-vue';
+
 const Anonymous = () => import('../views/anonymous');
 
 const LectureCreateOrUpdate = () => import('../views/lecture/createorupdate');
@@ -7,6 +9,7 @@ const CategoryCreateOrUpdate = () => import('../views/category/createorupdate');
 const CategoryList = () => import('../views/category/list');
 
 const UploadFile = () => import('../views/file/upload');
+const ListFile = () => import('../views/file/list');
 
 export const routes = [{
     name: 'lecture',
@@ -41,7 +44,7 @@ export const routes = [{
             component: CategoryList
         }
     ]
-}/*,
+},
 {
     name: 'file',
     path: '/file',
@@ -51,7 +54,12 @@ export const routes = [{
             name: 'upload',
             path: 'upload',
             component: UploadFile
+        },
+        {
+            name: 'list',
+            path: 'list',
+            component: ListFile
         }
     ]
-}*/         /*when have API Upload will appear*/
+}
 ];

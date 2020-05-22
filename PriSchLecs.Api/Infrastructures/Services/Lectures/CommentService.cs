@@ -33,13 +33,16 @@ namespace PriSchLecs.Api.Infrastructures.Services.Lectures
             var comment = model.ToComment();
             comment.UpdateCommonInt();
 
-            var validParent = CommentRepository.Query().Where(x => x.LectureId == comment.LectureId).FirstOrDefault(x => x.Id == comment.ParentId);
-
-            if(validParent == null)
+            if (comment.ParentId!= null && comment.ParentId !=0)
             {
-                return new CreateOrUpdateResult() { Result = Result.Failed, Message = "Không tìm thấy id bình luận cha trong danh sách bình luận của bài giảng" };
+                var validParent = CommentRepository.Query().Where(x => x.LectureId == comment.LectureId).FirstOrDefault(x => x.Id == comment.ParentId);
+                if (validParent == null)
+                {
+                    return new CreateOrUpdateResult() { Result = Result.Failed, Message = "Không tìm thấy id bình luận cha trong danh sách bình luận của bài giảng" };
+                }
             }
 
+            
             if (comment.Id > 0)
             {
                 return await Update(comment);
@@ -110,9 +113,9 @@ namespace PriSchLecs.Api.Infrastructures.Services.Lectures
             {
                 try
                 {
-                   await CommentRepository.DeleteAsync(commentForDeletion);
+                    await CommentRepository.DeleteAsync(commentForDeletion);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     result.Result = Result.SystemError;
                     result.Message = e.ToString();
@@ -142,6 +145,10 @@ namespace PriSchLecs.Api.Infrastructures.Services.Lectures
                 {
                     int parentId = search.ParentId;
                     query = query.Where(x => x.ParentId == parentId);
+                }
+                else
+                {
+                    query = query.Where(x => x.ParentId == null);
                 }
                 if (search.CreateStart != null)
                 {

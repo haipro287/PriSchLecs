@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PriSchLecs.Api.Infrastructures.Data;
 
 namespace PriSchLecs.Api.Migrations
 {
     [DbContext(typeof(PriSchLecsDbContext))]
-    partial class PriSchLecsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200508183905_PriSchLecs.1.20.5.3")]
+    partial class PriSchLecs12053
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,30 +189,6 @@ namespace PriSchLecs.Api.Migrations
                     b.ToTable("Lecture");
                 });
 
-            modelBuilder.Entity("PriSchLecs.Api.Domains.Lectures.LectureFile", b =>
-                {
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FileId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset?>("CreatedTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("UpdatedTime")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("LectureId", "FileId");
-
-                    b.HasIndex("FileId");
-
-                    b.ToTable("LectureFile");
-                });
-
             modelBuilder.Entity("PriSchLecs.Api.Domains.Categories.Category", b =>
                 {
                     b.HasOne("PriSchLecs.Api.Domains.Categories.Category", "Parent")
@@ -246,21 +224,6 @@ namespace PriSchLecs.Api.Migrations
                         .WithMany()
                         .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.NoAction);
-                });
-
-            modelBuilder.Entity("PriSchLecs.Api.Domains.Lectures.LectureFile", b =>
-                {
-                    b.HasOne("PriSchLecs.Api.Domains.Files.File", "File")
-                        .WithMany()
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("PriSchLecs.Api.Domains.Lectures.Lecture", "Lecture")
-                        .WithMany()
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
