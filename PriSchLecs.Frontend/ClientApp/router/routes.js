@@ -1,6 +1,6 @@
 const Anonymous = () => import('../views/anonymous');
-const NotFound = () => import('views/notFound');
-const Home = () => import('views/home');
+const NotFound = () => import('../views/notFound');
+const Home = () => import('../views/showcategory/home');
 const Lecture = () => import('../views/showlecture/lecture');
 
 const Category = () => import('../views/showlecture/category');
