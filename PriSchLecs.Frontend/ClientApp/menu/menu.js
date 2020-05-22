@@ -1,102 +1,86 @@
-﻿/*code in app.vue
-<a-sub-menu v-for="subMenu in menu" :key="subMenu.name">
-    <span slot="title">
-        <router-link :to="subMenu.path">{{ subMenu.name }}</router-link>
-    </span>
-    <a-menu-item v-for="(subObject, index) in menu.objects" :key="index">
-        <router-link :to="subObject.path">{{ subObject.object }}</router-link>
-    </a-menu-item>
-</a-sub-menu>
- */
-export
-    const menu = [
+﻿export const menu = [//sửa lại id sau khi update database
     {
         name: "Lớp 1",
-        path: "/grade1",
-        objects: [
+        children: [
             {
-                object: "Toán",
-                path: "/math1"
+                name: "Toán lớp 1",
+                path: '/category/list/25'
             },
             {
-                object: "Văn",
-                path: "/literature1"
+                name: 'Văn lớp 1',
+                path: '/category/list/26'
             },
             {
-                object: "Anh",
-                path: "/english1"
+                name: 'Anh lớp 1',
+                path: '/category/list/27'
             }
         ]
     },
     {
         name: "Lớp 2",
-        path: "/grade2",
-        objects: [
+        children: [
             {
-                object: "Toán",
-                path: "/math2"
+                name: "Toán lớp 2",
+                path: '/category/list/25'
             },
             {
-                object: "Văn",
-                path: "/literature2"
+                name: 'Văn lớp 2',
+                path: '/category/list/25'
             },
             {
-                object: "Anh",
-                path: "/english2"
+                name: 'Anh lớp 2',
+                path: '/category/list/25'
             }
         ]
     },
     {
         name: "Lớp 3",
-        path: "/grade3",
-        objects: [
+        children: [
             {
-                object: "Toán",
-                path: "/math3"
+                name: "Toán lớp 3",
+                path: '/category/list/25'
             },
             {
-                object: "Văn",
-                path: "/literature3"
+                name: 'Văn lớp 3',
+                path: '/category/list/25'
             },
             {
-                object: "Anh",
-                path: "/english3"
+                name: 'Anh lớp 3',
+                path: '/category/list/25'
             }
         ]
     },
     {
         name: "Lớp 4",
-        path: "/grade4",
-        objects: [
+        children: [
             {
-                object: "Toán",
-                path: "/math4"
+                name: "Toán lớp 4",
+                path: '/category/list/25'
             },
             {
-                object: "Văn",
-                path: "/literature4"
+                name: 'Văn lớp 4',
+                path: '/category/list/25'
             },
             {
-                object: "Anh",
-                path: "/english4"
+                name: 'Anh lớp 4',
+                path: '/category/list/25'
             }
         ]
     },
     {
         name: "Lớp 5",
-        path: "/grade5",
-        objects: [
+        children: [
             {
-                object: "Toán",
-                path: "/math5"
+                name: "Toán lớp 5",
+                path: '/category/list/25'
             },
             {
-                object: "Văn",
-                path: "/literature5"
+                name: 'Văn lớp 5',
+                path: '/category/list/25'
             },
             {
-                object: "Anh",
-                path: "/english5"
+                name: 'Anh lớp 5',
+                path: '/category/list/25'
             }
         ]
     },
@@ -104,18 +88,14 @@ export
 export const categories = [
     {
         name: "Bài giảng",
-        path: "/categorys/lesson"
+        path: "/stocklecture"
     },
     {
         name: "Giáo án",
-        path: "/categorys/lessonPlan"
+        path: "/category/list/29"
     },
     {
         name: "Đề thi & Kiểm tra",
-        path: "/categorys/exam"
-    },
-    {
-        name: "Tư liệu",
-        path: "/categorys/documentation"
+        path: "/category/list/28"
     }
 ];

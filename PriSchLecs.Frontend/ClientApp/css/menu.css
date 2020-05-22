@@ -1,7 +1,6 @@
 ﻿#components-layout-demo-top-side-2 .logo {
     width: 120px;
     height: 31px;
-    /*background: rgba(255, 255, 255, 0.2);*/
     margin: 16px 28px 16px 0;
     float: left;
     color: #fff;
@@ -16,68 +15,11 @@
     top: 20px;
     left: calc(100% - 300px);
 }
-
-#components-layout-demo-top-side-2 .icon-search {
-    background: #F5A;
-    width: 20px;
-    height: 65%;
-    position: absolute;
-    top: 6px;
-    left: calc(100% - 85px);
-    transform: scale(1.5);
-}
-
 #components-layout-demo-top-side-2 .contact {
     display: inline-grid;
     text-align: left;
     line-height: 15px;
     position: relative;
     left: calc(100% - 320px);
-    top: -30px;
+    top: -50px;
 }
-
-#components-layout-demo-top-side-2 .welcome {
-    font-size: 30px;
-    position: relative;
-    top: 85px;
-    left: 30px;
-}
-    /*:defaultSelectedKeys="['1']"
-:defaultOpenKeys="['sub1']"*/
-    /*queue in menu
-    <a-menu-item v-for="(subMenu, index) in menu" :key="index">
-        <router-link :to="subMenu.path">{{subMenu.name}}</router-link>
-    </a-menu-item>
-*/
-    /*
-    <a-sub-menu key="sub1">
-        <span slot="title"><a-icon type="user" />Lớp 1</span>
-        <a-menu-item key="1">Toán</a-menu-item>
-        <a-menu-item key="2">Văn</a-menu-item>
-        <a-menu-item key="3">Anh</a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="sub2">
-        <span slot="title"><a-icon type="user" />Lớp 2</span>
-        <a-menu-item key="4">Toán</a-menu-item>
-        <a-menu-item key="5">Văn</a-menu-item>
-        <a-menu-item key="6">Anh</a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="sub3">
-        <span slot="title"><a-icon type="user" />Lớp 3</span>
-        <a-menu-item key="7">Toán</a-menu-item>
-        <a-menu-item key="8">Văn</a-menu-item>
-        <a-menu-item key="9">Anh</a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="sub4">
-        <span slot="title"><a-icon type="user" />Lớp 4</span>
-        <a-menu-item key="10">Toán</a-menu-item>
-        <a-menu-item key="11">Văn</a-menu-item>
-        <a-menu-item key="12">Anh</a-menu-item>
-    </a-sub-menu>
-    <a-sub-menu key="sub5">
-        <span slot="title"><a-icon type="user" />Lớp 5</span>
-        <a-menu-item key="13">Toán</a-menu-item>
-        <a-menu-item key="14">Văn</a-menu-item>
-        <a-menu-item key="15">Anh</a-menu-item>
-    </a-sub-menu>
-*/
