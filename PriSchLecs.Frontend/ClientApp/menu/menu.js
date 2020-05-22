@@ -4,15 +4,15 @@
         children: [
             {
                 name: "Toán lớp 1",
-                path: '/category/list/25'
+                path: '/category/list/15'
             },
             {
                 name: 'Văn lớp 1',
-                path: '/category/list/26'
+                path: '/category/list/16'
             },
             {
                 name: 'Anh lớp 1',
-                path: '/category/list/27'
+                path: '/category/list/17'
             }
         ]
     },
@@ -21,15 +21,15 @@
         children: [
             {
                 name: "Toán lớp 2",
-                path: '/category/list/25'
+                path: '/category/list/18'
             },
             {
                 name: 'Văn lớp 2',
-                path: '/category/list/25'
+                path: '/category/list/19'
             },
             {
                 name: 'Anh lớp 2',
-                path: '/category/list/25'
+                path: '/category/list/20'
             }
         ]
     },
@@ -38,15 +38,15 @@
         children: [
             {
                 name: "Toán lớp 3",
-                path: '/category/list/25'
+                path: '/category/list/21'
             },
             {
                 name: 'Văn lớp 3',
-                path: '/category/list/25'
+                path: '/category/list/22'
             },
             {
                 name: 'Anh lớp 3',
-                path: '/category/list/25'
+                path: '/category/list/23'
             }
         ]
     },
@@ -55,7 +55,7 @@
         children: [
             {
                 name: "Toán lớp 4",
-                path: '/category/list/25'
+                path: '/category/list/24'
             },
             {
                 name: 'Văn lớp 4',
@@ -63,7 +63,7 @@
             },
             {
                 name: 'Anh lớp 4',
-                path: '/category/list/25'
+                path: '/category/list/26'
             }
         ]
     },
@@ -72,15 +72,15 @@
         children: [
             {
                 name: "Toán lớp 5",
-                path: '/category/list/25'
+                path: '/category/list/27'
             },
             {
                 name: 'Văn lớp 5',
-                path: '/category/list/25'
+                path: '/category/list/28'
             },
             {
                 name: 'Anh lớp 5',
-                path: '/category/list/25'
+                path: '/category/list/29'
             }
         ]
     },
@@ -92,10 +92,10 @@ export const categories = [
     },
     {
         name: "Giáo án",
-        path: "/category/list/29"
+        path: "/category/list/31"
     },
     {
         name: "Đề thi & Kiểm tra",
-        path: "/category/list/28"
+        path: "/category/list/30"
     }
 ];
