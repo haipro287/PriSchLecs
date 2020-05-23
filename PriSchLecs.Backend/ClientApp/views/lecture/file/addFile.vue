@@ -1,5 +1,6 @@
 ﻿<template>
     <a-row>
+        <addFile></addFile>
         <b-card class="mt-3" footer-tag="footer">
             <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
                 <div class="row">
@@ -78,6 +79,8 @@
     import moment from 'moment';
     import lectureFileApi from './lectureFileApi';
     import fileApi from '../../file/api';
+    import addFile from '../../file/upload';
+
     export default {
         created() {
             this.CreateFormSearch();
@@ -238,6 +241,9 @@
             ChangePage(page, pageSize) {
                 this.LoadData();
             }
+        },
+        components: {
+            addFile
         }
     }
 </script>
