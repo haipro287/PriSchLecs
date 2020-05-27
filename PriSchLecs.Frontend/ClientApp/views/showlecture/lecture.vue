@@ -11,22 +11,21 @@
             <a-button @click="addLike" type="primary" icon="like">Like</a-button>
             <a-button type="primary" icon="download" size="medium">Download</a-button>
             <p class="lecture-reaction-count">Số lượt xem: {{ Model.view }} - Số lượt thích: {{ likeNumbers }} - Số lượt tải: {{ Model.download }}</p>
-            <a-tabs default-active-key="1" @change="callback">
-                <a-tab-pane key="1" tab="Tab 1">
+            <a-tabs default-active-key="1">
+                <a-tab-pane key="1" tab="Tải tài liệu">
                     <comment></comment>
                 </a-tab-pane>
-                <a-tab-pane key="2" tab="Tab 2" force-render>
-                    Content of Tab Pane 2
+                <a-tab-pane key="2" tab="Bình luận">
+                    <comment></comment>
                 </a-tab-pane>
-                <a-tab-pane key="3" tab="Tab 3">
-                    Content of Tab Pane 3
-                </a-tab-pane>
+
             </a-tabs>
         </div>
     </div> 
 </template>
 <script>
     import comment from '../optionlecture/comment';
+    import file from '../optionlecture/comment';
     import axios from 'axios';
     import api from './showlectureApi';
 
@@ -82,7 +81,8 @@
             },
         },
         components: {
-            comment
+            comment,
+            file
         }
     };
 </script>

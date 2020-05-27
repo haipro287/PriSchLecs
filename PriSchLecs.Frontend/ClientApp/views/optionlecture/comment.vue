@@ -1,6 +1,24 @@
 ﻿<template>
     <a-spin tip="Đang tải..." :spinning="IsLoading">
         <a-row>
+            <a-list class="comment-list"
+                    :header="`${data.length} replies`"
+                    item-layout="horizontal"
+                    :data-source="data">
+                <a-list-item slot="renderItem" slot-scope="item, index">
+                    <a-comment :author="item.author" :avatar="item.avatar">
+                        <template slot="actions">
+                            <span v-for="action in item.actions">{{ action }}</span>
+                        </template>
+                        <p slot="content">
+                            {{ item.content }}
+                        </p>
+                        <a-tooltip slot="datetime" :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
+                            <span>{{ item.datetime.fromNow() }}</span>
+                        </a-tooltip>
+                    </a-comment>
+                </a-list-item>
+            </a-list>
             <div class="card">
                 <div class="card-header card-header-flex">
                     <div class="d-flex flex-column justify-content-center">
@@ -64,6 +82,7 @@
                     </a-modal>
                 </div>
             </div>
+
         </a-row>
     </a-spin>
 
@@ -85,6 +104,26 @@
         },
         data() {
             return {
+                data: [
+                    {
+                        actions: ['Reply to'],
+                        author: 'Han Solo',
+                        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                        content:
+                            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+                        datetime: moment().subtract(1, 'days'),
+                    },
+                    {
+                        actions: ['Reply to'],
+                        author: 'Han Solo',
+                        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+                        content:
+                            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+                        datetime: moment().subtract(2, 'days'),
+                    },
+                ],
+
+
                 FrmSearch: null,
                 IsLoading: false,
                 Ranges: { 'Hôm nay': [moment(), moment()], 'Hôm qua': [moment().add('days', -1), moment().add('days', -1)], 'Tuần này': [moment().startOf('isoWeek'), moment().endOf('isoWeek')], 'Tuần trước': [moment().add(-1, 'weeks').startOf('isoWeek'), moment().add(-1, 'weeks').endOf('isoWeek')], 'Tháng này': [moment().startOf('month'), moment().endOf('month')], 'Tháng trước': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')] },
@@ -187,7 +226,7 @@
                 this.ParentId = null;
                 var params = this.GetSearchParam();
                 console.log(params);
-                axios.post(commentApi.list, params).then(r => {
+                axios.post(commentApi.listComment, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
