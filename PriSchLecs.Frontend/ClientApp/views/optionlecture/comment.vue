@@ -1,169 +1,269 @@
 ﻿<template>
-    <div>
-        <div>
-            <ul class="list-unstyled">
-                <b-media tag="li">
-                    <template v-slot:aside>
-                        <img class="img-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQc0ZN8pzI6_zoChyOaZ0kBQFUavxa9IYiOyccKo44IJe-7hDPS&usqp=CAU" alt="Avatar">
-                    </template>
-                    <h5 class="mt-0 mb-1">Hải Yến</h5>
-                    <p class="mb-0">
-                        Bài giảng hay!
-                    </p>
-                </b-media>
+    <a-spin tip="Đang tải..." :spinning="IsLoading">
+        <a-row>
+            <div class="card">
+                <div class="card-header card-header-flex">
+                    <div class="d-flex flex-column justify-content-center">
+                        <a-button class="btn btn-sm btn-primary mr-2" icon="plus" @click="showModal(null)">
+                            Tạo bình luận
+                        </a-button>
+                    </div>
+                </div>
+                <div class="card-body" style="padding:16px;">
+                    <a-table :columns="Columns"
+                             :dataSource="Items"
+                             :pagination="false">
+                        <span slot="act" slot-scope="record">
+                            <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
+                                <a-icon type="delete" />
+                                Xóa
+                            </a-button>
+                            <a-button class="btn btn-sm btn-primary mr-2" @click="showModal(record.id)">
+                                <a-icon type="retweet" />
+                                Trả lời
+                            </a-button>
+                        </span>
 
-                <b-media tag="li" class="my-4">
-                    <template v-slot:aside>
-                        <img class="img-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQc0ZN8pzI6_zoChyOaZ0kBQFUavxa9IYiOyccKo44IJe-7hDPS&usqp=CAU" alt="Avatar">
-                    </template>
+                    </a-table>
+                    <a-pagination class="mt-2 ant-pagination ant-table-pagination"
+                                  :total="Pagination.Total"
+                                  :pageSize="Pagination.PageSize"
+                                  :pageSizeOptions="PageSizeOptions"
+                                  v-model="Pagination.PageIndex"
+                                  showSizeChanger
+                                  showQuickJumper
+                                  :showTotal="(total, range) => `Từ ${range[0]} đến ${range[1]} của ${total} bản ghi`"
+                                  @change="ChangePage"
+                                  @showSizeChange="ChangePageSize"
+                                  :locale="{items_per_page:' / trang',
+                          jump_to:'Đến',
+                          jump_to_confirm:'xác nhận',
+                          next_3:'Đến 3 Trang Kế',
+                          next_5:'Đến 5 Trang Kế',
+                          next_page:'Trang Kế',
+                          page:'',
+                          prev_3:'Về 3 Trang Trước',
+                          prev_5:'Về 5 Trang Trước',
+                          prev_page:'Trang Trước',
+                          }">
+                    </a-pagination>
 
-                    <h5 class="mt-0 mb-1">Bảo Trâm</h5>
-                    <p class="mb-0">
-                        Font chữ hơi lỗi.
-                    </p>
-                </b-media>
+                    <a-modal title="Trả lời bình luận"
+                             :visible="visible"
+                             :width="1000"
+                             @ok="handleOk"
+                             :confirmLoading="false"
+                             @cancel="handleCancel">
+                        <div>
+                            <a-input v-model="replyContent"></a-input>
+                            <a-button class="btn btn-sm btn-primary mr-2" @click="reply()">
+                                <a-icon type="retweet" />
+                                Trả lời
+                            </a-button>
+                        </div>
+                    </a-modal>
+                </div>
+            </div>
+        </a-row>
+    </a-spin>
 
-                <b-media tag="li">
-                    <template v-slot:aside>
-                        <img class="img-avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQc0ZN8pzI6_zoChyOaZ0kBQFUavxa9IYiOyccKo44IJe-7hDPS&usqp=CAU" alt="Avatar">
-                    </template>
-
-                    <h5 class="mt-0 mb-1">Lưu Ngọc</h5>
-                    <p class="mb-0">
-                        Well done!
-                    </p>
-                </b-media>
-            </ul>
-        </div>
-
-
-        <div>
-            <a-form :form="form" @submit="handleSubmit">
-                <a-form-item v-bind="formItemLayout">
-                    <span slot="label">
-                        Họ tên
-                    </span>
-                    <a-input v-decorator=" [
-  'string',
-          {
-            rules: [{ required: true, message: 'Xin mời nhập tên!', whitespace: true }],
-          },
-        ]" />
-                </a-form-item>
-                <a-form-item v-bind="formItemLayout" label="Số điện thoại">
-                    <a-input v-decorator=" ['phone',
-{
-            rules: [
-              {
-                minlength: 9, message: 'Số điện thoại không hợp lệ!'
-              }
-            ]
-          }]"
-                             style="width: 100%">
-                        <a-select slot="addonBefore"
-                                  v-decorator="['prefix', { initialValue: '84' }]"
-                                  style="width: 70px">
-                            <a-select-option value="84">
-                                +84
-                            </a-select-option>
-
-                        </a-select>
-                    </a-input>
-                </a-form-item>
-
-
-                <a-form-item v-bind="formItemLayout" label="E-mail">
-                    <a-input v-decorator="[
-          'email',
-          {
-            rules: [
-              {
-                type: 'email',
-                message: 'E-mail không hợp lệ!'
-              }
-            ]
-          }
-        ]" />
-                </a-form-item>
-                <a-form-item v-bind="formItemLayout" label="Bình luận">
-                    <a-textarea required placeholder="Nhập bình luận của bạn..." :rows="4" />
-                </a-form-item>
-                <a-form-item v-bind="tailFormItemLayout">
-                    <a-button type="primary" html-type="submit" onclick="window.location.href = '_blank';">
-                        Đăng bình luận
-                    </a-button>
-                </a-form-item>
-            </a-form>
-        </div>
-    </div>
 
 </template>
 
 <script>
-      export default {
+    import axios from 'axios';
+    import commentApi from './optionlectureApi';
+    import moment from 'moment';
+
+    export default {
+        created() {
+            this.CreateFormSearch();
+
+        },
+        mounted() {
+            this.LoadData();
+        },
         data() {
             return {
-                confirmDirty: false,
-                autoCompleteResult: [],
-                formItemLayout: {
-                    labelCol: {
-                        xs: { span: 24 },         
-                        sm: { span: 5 },
-                    },
-                    wrapperCol: {
-                        xs: { span: 24 },
-                        sm: { span: 16 },
-                    },
+                FrmSearch: null,
+                IsLoading: false,
+                Ranges: { 'Hôm nay': [moment(), moment()], 'Hôm qua': [moment().add('days', -1), moment().add('days', -1)], 'Tuần này': [moment().startOf('isoWeek'), moment().endOf('isoWeek')], 'Tuần trước': [moment().add(-1, 'weeks').startOf('isoWeek'), moment().add(-1, 'weeks').endOf('isoWeek')], 'Tháng này': [moment().startOf('month'), moment().endOf('month')], 'Tháng trước': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')] },
+                Pagination: {
+                    Total: 0,
+                    PageIndex: 1,
+                    PageSize: 5
                 },
-                tailFormItemLayout: {
-                    wrapperCol: {
-                        sm: {
-                            span: 16,
-                            offset: 8,
-                        },
-                    },
+                Sort: {
+                    Predicate: '',
+                    Reverse: true
                 },
-            };
-        },
-        beforeCreate() {
-            this.form = this.$form.createForm(this, { name: 'submit' });
+                Search: {
+                    PredicateObject: {
+
+                    }
+                },
+                LectureId: null,
+                ParentId: null,
+                Items: [],
+                PageSizeOptions: ['5', '15', '25', '50', '100', '200', '500', '1000'],
+                Columns: [
+                    {
+                        title: 'ID',
+                        dataIndex: 'id',
+                        key: 'id'
+                    },
+                    {
+                        title: 'người dùng',
+                        dataIndex: 'username',
+                        key: 'username'
+                    }, {
+                        title: 'Email',
+                        dataIndex: 'email',
+                        key: 'email'
+                    },
+                    {
+                        title: 'Nội dung',
+                        dataIndex: 'content',
+                        key: 'content'
+                    },
+                    {
+                        title: 'Ngày tạo',
+
+                        dataIndex: 'createdTimeDisplay',
+                        key: 'createdTimeDisplay'
+                    },
+                    {
+                        title: 'Ngày cập nhật',
+                        dataIndex: 'updatedTimeDisplay',
+                        key: 'updatedTimeDisplay'
+                    },
+                    {
+                        title: 'Action',
+                        scopedSlots: { customRender: 'act' },
+                    },
+                ],
+                replyContent: null,
+                visible: false,
+                parentOfReply: null
+            }
         },
         methods: {
-            handleSubmit(e) {
-                e.preventDefault();
-                this.form.validateFieldsAndScroll((err, values) => {
-                    if (!err) {
-                        console.log('Received values of form: ', values);
+            moment,
+            CreateFormSearch() {
+                let options = {
+                    mapPropsToFields: () => {
+                        return {
+                            Keyword: this.$form.createFormField({ value: '', }),
+                            CreatedTime: this.$form.createFormField({ value: [] }),
+                        };
                     }
+                }
+                this.FrmSearch = this.$form.createForm(this, options);
+            },
+            //Events
+            FrmSearchSubmit(e) {
+                e.preventDefault();
+                this.Pagination.PageIndex = 1;
+                this.LoadData();
+            },
+            GetSearchParam() {
+                return {
+                    Pagination: this.Pagination,
+                    Sort: this.Sort,
+                    Search: {
+                        PredicateObject: {
+                            Keyword: this.FrmSearch.getFieldValue('Keyword'),
+                            CreateStart: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[0]).format() : null,
+                            CreateEnd: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[1]).format() : null,
+                            LectureId: this.$route.params.id,
+                            ParentId: this.ParentId
+                        }
+                    },
+
+                }
+            },
+            LoadData() {
+                this.IsLoading = true;
+                this.ParentId = null;
+                var params = this.GetSearchParam();
+                console.log(params);
+                axios.post(commentApi.list, params).then(r => {
+                    this.IsLoading = false;
+                    this.LoadDataSuccess(r);
+                }).catch(error => {
+                    this.IsLoading = false;
+                    this.$message.error('Không thể kết nối tới máy chủ', 3);
+                    console.log(error);
                 });
             },
-            handleConfirmBlur(e) {
-                const value = e.target.value;
-                this.confirmDirty = this.confirmDirty || !!value;
-            },
-            compareToFirstPassword(rule, value, callback) {
-                const form = this.form;
-                if (value && value !== form.getFieldValue('password')) {
-                    callback('Two passwords that you enter is inconsistent!');
-                } else {
-                    callback();
+            LoadDataSuccess(r) {
+                this.Items = [];
+                console.log(r);
+                if (r.data.items) {
+                    this.Pagination.Total = r.data.totalRecord;
+                    this.Items = r.data.items;
+                    this.Items.forEach(item => {
+                        item.key = item.id;
+                        this.ParentId = item.id;
+                        let params = this.GetSearchParam();
+                        axios.post(commentApi.list, params).then(r => {
+                            console.log(r.data.items);
+                            item.children = r.data.items;
+                            item.children.forEach(child => {
+                                child.key = child.id;
+                            })
+                        });
+                    });
+                }
+                else {
+                    this.IsLoading = false;
+                    this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
-            validateToNextPassword(rule, value, callback) {
-                const form = this.form;
-                if (value && this.confirmDirty) {
-                    form.validateFields(['confirm'], { force: true });
+            DeleteProduct(id) {
+                if (confirm("Có thật sự muốn xóa?")) {
+                    axios.delete(commentApi.delete + id).then(response => {
+                        console.log(response);
+                        if (response.data.result == 1) {
+                            this.LoadData();
+                        }
+                    });
                 }
-                callback();
-            }
             },
-        
-        };
+            ChangePageSize(current, size) {
+                this.Pagination.PageSize = size;
+                this.LoadData();
+            },
+            ChangePage(page, pageSize) {
+                this.LoadData();
+            },
+            reply(id) {
+                axios.post(commentApi.comment, {
+                    content: this.replyContent,
+                    username: "Admin",
+                    email: "cnpm@vnu.edu.vn",
+                    lectureId: this.$route.params.id,
+                    parentId: this.parentOfReply
+                }).then(() => {
+                    this.showModal(null);
+                    this.$message.success('đăng bình luận thành công!', 3);
+                })
+            },
+            showModal(id) {
+                this.visible = true;
+                this.parentOfReply = id;
+            },
+            handleOk() {
+                this.visible = false;
+                this.LoadData();
+            },
+            handleCancel() {
+                this.visible = false;
+                this.LoadData();
+            },
+        }
+    }
 </script>
 
 <style>
-    .img-avatar {
-        width: 65px;
-        height: 65px;
-    }
-</style> 
+</style>

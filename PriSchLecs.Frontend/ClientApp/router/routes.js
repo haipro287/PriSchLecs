@@ -1,11 +1,11 @@
 const Anonymous = () => import('../views/anonymous');
 const NotFound = () => import('../views/notFound');
+
 const Home = () => import('../views/showcategory/home');
+
 const Lecture = () => import('../views/showlecture/lecture');
-
-const Category = () => import('../views/showlecture/category');
 const CategoryList = () => import('../views/showlecture/categorylist');
-
+const SearchLecture = () => import('../views/showlecture/searchlecture');
 
 
 
@@ -37,5 +37,15 @@ export const routes = [
             }
         ]
     },
+    {
+        name: 'search',
+        path: '/search/:keyword',
+        component: SearchLecture
+    },
+    {
+        name: 'searchnull',
+        path: '/search',
+        component: SearchLecture
+    }
     
 ];

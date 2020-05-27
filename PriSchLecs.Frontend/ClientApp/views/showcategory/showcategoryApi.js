@@ -1,5 +1,6 @@
 ﻿import baseApi from '../baseApi';
 
 export default {
-    searchLecture: baseApi.baseApi + '/api/Lecture/Search/'
+    searchLecture: baseApi.baseApi + 'lecture/Search/',
+    listCategory: baseApi.baseApi + 'category/search/'
 }

@@ -87,10 +87,6 @@
 ];
 export const categories = [
     {
-        name: "Bài giảng",
-        path: "/stocklecture"
-    },
-    {
         name: "Giáo án",
         path: "/category/list/31"
     },

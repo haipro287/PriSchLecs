@@ -18,7 +18,7 @@
                 </a-list-item>
             </a-list>
         </div>
-        <div class="card-body">
+        <div class="card-footer">
             <a-pagination class="mt-2 ant-pagination ant-table-pagination"
                           :total="Pagination.Total"
                           :pageSize="Pagination.PageSize"
@@ -41,7 +41,7 @@
                                     prev_page:'Trang Trước',
                                     }">
             </a-pagination>
-        </div> 
+        </div>
     </div>
 
 </template>
@@ -153,10 +153,7 @@
                     Sort: this.Sort,
                     Search: {
                         PredicateObject: {
-                            CategoryId: this.$route.params.id,
-                            Keyword: this.FrmSearch.getFieldValue('Keyword'),
-                            CreateStart: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[0]).format() : null,
-                            CreateEnd: this.FrmSearch.getFieldValue('CreatedTime').length > 0 ? moment(this.FrmSearch.getFieldValue('CreatedTime')[1]).format() : null,
+                            Keyword: this.$route.params.keyword ? this.$route.params.keyword : null ,
                         }
                     }
                 }
@@ -164,8 +161,7 @@
             LoadData() {
                 this.IsLoading = true;
                 var params = this.GetParam();
-                console.log(params);
-                axios.post(api.getLectureByCategoryId, params).then(r => {
+                axios.post(api.searchLecture, params).then(r => {
                     this.IsLoading = false;
                     this.LoadDataSuccess(r);
                 }).catch(error => {
@@ -191,7 +187,7 @@
                     this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
-            
+
         },
         components: {
 

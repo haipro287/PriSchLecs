@@ -14,17 +14,15 @@
                     <router-link :to="subCategory.path">{{ subCategory.name }}</router-link>
                 </a-menu-item>
             </a-menu>
-            <div class="search">
-                <a-input v-decorator="['Keyword']"
-                         placeholder="Từ khóa..."
-                         style="width: 190px;" />
-                <a-button type="primary" html-type="submit" icon="search" style="width: 45px;">
-                </a-button>
+            <div id="search">
+                <a-input-search @search="onSearch"
+                                placeholder="Từ khóa..." enter-button />
             </div>
         </a-layout-header>
+
         <a-layout>
             <a-layout-sider width="200" style="background: #fff">
-                <a-menu mode="inline" :style="{ height: '100vh', borderRight: 0, overflow: 'scroll' }" theme="dark">
+                <a-menu mode="inline" :style="{ height: '100%'}" theme="dark">
                     <a-sub-menu v-for="submenu in menu" :key="submenu.name">
                         <span slot="title"><a-icon type="user" />{{submenu.name}}</span>
                         <a-menu-item v-for="menuitem in submenu.children" :key="menuitem.name">
@@ -39,28 +37,37 @@
                 </a-layout-content>
             </a-layout>
         </a-layout>
-        
+
     </a-layout>
 </template>
 <script>
-    import lecture from './showlecture/lecture';
+    import lecture from './showlecture/showlectureApi';
     import { menu } from '../menu/menu';
     import { categories } from '../menu/menu';
-    import category from '../views/showlecture/category';
     export default {
+        created() {
+            this.CreateFormSearch();
+        },
+        mounted() {
+            this.LoadData();
+        },
         data() {
             return {
                 collapsed: false,
                 menu: menu,
-                category: categories
+                category: categories,
+                Keyword: ''
             };
         },
         components: {
             lecture,
-            category
         },
-        method() {
-            
+        methods: {
+            onSearch(value) {
+                console.log(value);
+                this.Keyword = value;
+                this.$router.replace("/search/" + this.Keyword);
+            }
         }
     };
 
