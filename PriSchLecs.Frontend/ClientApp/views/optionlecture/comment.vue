@@ -1,88 +1,53 @@
 ﻿<template>
     <a-spin tip="Đang tải..." :spinning="IsLoading">
         <a-row>
-            <a-list class="comment-list"
-                    :header="`${data.length} replies`"
-                    item-layout="horizontal"
-                    :data-source="data">
-                <a-list-item slot="renderItem" slot-scope="item, index">
-                    <a-comment :author="item.author" :avatar="item.avatar">
-                        <template slot="actions">
-                            <span v-for="action in item.actions">{{ action }}</span>
-                        </template>
-                        <p slot="content">
-                            {{ item.content }}
-                        </p>
-                        <a-tooltip slot="datetime" :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
-                            <span>{{ item.datetime.fromNow() }}</span>
-                        </a-tooltip>
-                    </a-comment>
-                </a-list-item>
-            </a-list>
-            <div class="card">
-                <div class="card-header card-header-flex">
-                    <div class="d-flex flex-column justify-content-center">
-                        <a-button class="btn btn-sm btn-primary mr-2" icon="plus" @click="showModal(null)">
-                            Tạo bình luận
-                        </a-button>
-                    </div>
-                </div>
-                <div class="card-body" style="padding:16px;">
-                    <a-table :columns="Columns"
-                             :dataSource="Items"
-                             :pagination="false">
-                        <span slot="act" slot-scope="record">
-                            <a-button class="btn btn-sm btn-danger mr-2" @click="DeleteProduct(record.id)">
-                                <a-icon type="delete" />
-                                Xóa
-                            </a-button>
-                            <a-button class="btn btn-sm btn-primary mr-2" @click="showModal(record.id)">
-                                <a-icon type="retweet" />
-                                Trả lời
-                            </a-button>
-                        </span>
-
-                    </a-table>
-                    <a-pagination class="mt-2 ant-pagination ant-table-pagination"
-                                  :total="Pagination.Total"
-                                  :pageSize="Pagination.PageSize"
-                                  :pageSizeOptions="PageSizeOptions"
-                                  v-model="Pagination.PageIndex"
-                                  showSizeChanger
-                                  showQuickJumper
-                                  :showTotal="(total, range) => `Từ ${range[0]} đến ${range[1]} của ${total} bản ghi`"
-                                  @change="ChangePage"
-                                  @showSizeChange="ChangePageSize"
-                                  :locale="{items_per_page:' / trang',
-                          jump_to:'Đến',
-                          jump_to_confirm:'xác nhận',
-                          next_3:'Đến 3 Trang Kế',
-                          next_5:'Đến 5 Trang Kế',
-                          next_page:'Trang Kế',
-                          page:'',
-                          prev_3:'Về 3 Trang Trước',
-                          prev_5:'Về 5 Trang Trước',
-                          prev_page:'Trang Trước',
-                          }">
-                    </a-pagination>
-
-                    <a-modal title="Trả lời bình luận"
-                             :visible="visible"
-                             :width="1000"
-                             @ok="handleOk"
-                             :confirmLoading="false"
-                             @cancel="handleCancel">
-                        <div>
-                            <a-input v-model="replyContent"></a-input>
-                            <a-button class="btn btn-sm btn-primary mr-2" @click="reply()">
-                                <a-icon type="retweet" />
-                                Trả lời
-                            </a-button>
+            <div>
+                <a-button class="btn btn-sm btn-primary mr-2" icon="plus" @click="showModal()">
+                    Tạo bình luận
+                </a-button>
+                <a-modal title="Vui lòng điền thông tin để thêm bình luận"
+                         :visible="visible"
+                         @ok="handleOk"
+                         @cancel="handleCancel">
+                    <a-form layout="vertical">
+                        <div class="col">
+                            <a-form-item label="Họ tên(*)">
+                                <a-input v-model="modelComment.username"
+                                         v-decorator="['username',{ rules: [{ required: false, message: 'Username is required!' }], },]" 
+                                         placeholder="Vui lòng nhập họ tên..." />
+                            </a-form-item>
                         </div>
-                    </a-modal>
-                </div>
+                        <div class="col">
+                            <a-form-item label="Email(*)">
+                                <a-input v-model="modelComment.email"
+                                         v-decorator="['email', { rules: [{required: true, message: 'vui lòng nhập email!'}]}]"
+                                         placeholder="Vui lòng nhập địa chỉ email..." />
+                            </a-form-item>
+                        </div>
+                        <div class="col">
+                            <a-form-item label="Nội dung bình luận">
+                                <a-input v-model="modelComment.content" />
+                            </a-form-item>
+                        </div>
+                    </a-form>
+                </a-modal>
             </div>
-
+            <div>
+                <a-list :header="`${this.Pagination.Total} bình luận`"
+                        item-layout="horizontal"
+                        :data-source="Items">
+                    <a-list-item slot="renderItem" slot-scope="item, index">
+                        <a-comment :author="item.username">
+                            <p slot="content">
+                                {{ item.content }}
+                            </p>
+                            <a-tooltip slot="datetime" :title="item.createdTimeDisplay">
+                                <span>{{ item.createdTimeDisplay }}</span>
+                            </a-tooltip>
+                        </a-comment>
+                    </a-list-item>
+                </a-list>
+            </div>
         </a-row>
     </a-spin>
 
@@ -104,33 +69,17 @@
         },
         data() {
             return {
-                data: [
-                    {
-                        actions: ['Reply to'],
-                        author: 'Han Solo',
-                        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                        content:
-                            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-                        datetime: moment().subtract(1, 'days'),
-                    },
-                    {
-                        actions: ['Reply to'],
-                        author: 'Han Solo',
-                        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                        content:
-                            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-                        datetime: moment().subtract(2, 'days'),
-                    },
-                ],
-
-
+                modelComment: {
+                    username: '',
+                    email: '',
+                    content: ''
+                },
                 FrmSearch: null,
                 IsLoading: false,
-                Ranges: { 'Hôm nay': [moment(), moment()], 'Hôm qua': [moment().add('days', -1), moment().add('days', -1)], 'Tuần này': [moment().startOf('isoWeek'), moment().endOf('isoWeek')], 'Tuần trước': [moment().add(-1, 'weeks').startOf('isoWeek'), moment().add(-1, 'weeks').endOf('isoWeek')], 'Tháng này': [moment().startOf('month'), moment().endOf('month')], 'Tháng trước': [moment().subtract(1, 'months').startOf('month'), moment().subtract(1, 'months').endOf('month')] },
                 Pagination: {
                     Total: 0,
                     PageIndex: 1,
-                    PageSize: 5
+                    PageSize: 10000
                 },
                 Sort: {
                     Predicate: '',
@@ -144,43 +93,6 @@
                 LectureId: null,
                 ParentId: null,
                 Items: [],
-                PageSizeOptions: ['5', '15', '25', '50', '100', '200', '500', '1000'],
-                Columns: [
-                    {
-                        title: 'ID',
-                        dataIndex: 'id',
-                        key: 'id'
-                    },
-                    {
-                        title: 'người dùng',
-                        dataIndex: 'username',
-                        key: 'username'
-                    }, {
-                        title: 'Email',
-                        dataIndex: 'email',
-                        key: 'email'
-                    },
-                    {
-                        title: 'Nội dung',
-                        dataIndex: 'content',
-                        key: 'content'
-                    },
-                    {
-                        title: 'Ngày tạo',
-
-                        dataIndex: 'createdTimeDisplay',
-                        key: 'createdTimeDisplay'
-                    },
-                    {
-                        title: 'Ngày cập nhật',
-                        dataIndex: 'updatedTimeDisplay',
-                        key: 'updatedTimeDisplay'
-                    },
-                    {
-                        title: 'Action',
-                        scopedSlots: { customRender: 'act' },
-                    },
-                ],
                 replyContent: null,
                 visible: false,
                 parentOfReply: null
@@ -259,16 +171,7 @@
                     this.$message.error('Không thể kết nối tới hệ thống', 3);
                 }
             },
-            DeleteProduct(id) {
-                if (confirm("Có thật sự muốn xóa?")) {
-                    axios.delete(commentApi.delete + id).then(response => {
-                        console.log(response);
-                        if (response.data.result == 1) {
-                            this.LoadData();
-                        }
-                    });
-                }
-            },
+
             ChangePageSize(current, size) {
                 this.Pagination.PageSize = size;
                 this.LoadData();
@@ -276,27 +179,29 @@
             ChangePage(page, pageSize) {
                 this.LoadData();
             },
-            reply(id) {
-                axios.post(commentApi.comment, {
-                    content: this.replyContent,
-                    username: "Admin",
-                    email: "cnpm@vnu.edu.vn",
-                    lectureId: this.$route.params.id,
-                    parentId: this.parentOfReply
-                }).then(() => {
-                    this.showModal(null);
-                    this.$message.success('đăng bình luận thành công!', 3);
-                })
-            },
-            showModal(id) {
+            showModal() {
                 this.visible = true;
-                this.parentOfReply = id;
             },
-            handleOk() {
-                this.visible = false;
+            handleOk(e) {
+                axios.post(commentApi.addComment, {
+                    username: this.modelComment.username,
+                    email: this.modelComment.email,
+                    content: this.modelComment.content,
+                    lectureId: this.$route.params.id,
+                    parentId: null
+                }).then(r => {
+                    this.$message.success('Thêm bình luận thành công!', 3);
+                }).catch(error => {
+                    this.$message.error('Lỗi khi thêm bình luận', 3);
+                    console.log(error);
+                });
+                setTimeout(() => {
+                    this.visible = false;
+                }, 1000);
                 this.LoadData();
             },
-            handleCancel() {
+            handleCancel(e) {
+                console.log('Clicked cancel button');
                 this.visible = false;
                 this.LoadData();
             },

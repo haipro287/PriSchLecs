@@ -8,24 +8,20 @@
             <p><span v-html="Model.content"></span></p>
         </div>
         <div class="card-footer">
-            <a-button @click="addLike" type="primary" icon="like">Like</a-button>
-            <a-button type="primary" icon="download" size="medium">Download</a-button>
-            <p class="lecture-reaction-count">Số lượt xem: {{ Model.view }} - Số lượt thích: {{ likeNumbers }} - Số lượt tải: {{ Model.download }}</p>
             <a-tabs default-active-key="1">
-                <a-tab-pane key="1" tab="Tải tài liệu">
+                <a-tab-pane key="1" tab="Bình luận">
                     <comment></comment>
                 </a-tab-pane>
-                <a-tab-pane key="2" tab="Bình luận">
-                    <comment></comment>
+                <a-tab-pane key="2" tab="Tải tài liệu">
+                    <file></file>
                 </a-tab-pane>
-
             </a-tabs>
         </div>
     </div> 
 </template>
 <script>
     import comment from '../optionlecture/comment';
-    import file from '../optionlecture/comment';
+    import file from '../optionlecture/file';
     import axios from 'axios';
     import api from './showlectureApi';
 
@@ -54,7 +50,7 @@
                     download: '',
                 },
                 likeNumbers: 150,
-                isLiked: false
+                isLiked: false,
             }
         },
         methods: {
@@ -79,6 +75,7 @@
                     }
                 }
             },
+            
         },
         components: {
             comment,
@@ -87,28 +84,5 @@
     };
 </script>
 <style>
-    * {
-        font-size: 14px;
-    }
-
-    .rating {
-        float: right;
-    }
-
-    .video {
-        width: 20%;
-        height: 20%;
-    }
-
-    .lecture-name {
-        padding: 10px 0px;
-    }
-
-    .lecture-tag {
-        padding-bottom: 0px;
-    }
-
-    .lecture-reaction-count {
-        margin-bottom: 7px;
-    }
+    
 </style>
