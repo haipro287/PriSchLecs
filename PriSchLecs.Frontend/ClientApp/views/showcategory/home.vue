@@ -3,6 +3,24 @@
         <h1>Chào mừng đến với trang web của chúng tôi.</h1>
         <div class="card-body">
             <h3>Danh sách danh mục</h3>
+            <a-form layout="vertical" :form="FrmSearch" @submit="FrmSearchSubmit">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-lg-3">
+                        <a-form-item label="Từ khóa" class="mb-0">
+                            <a-input v-decorator="['Keyword']"
+                                     placeholder="Từ khóa..." />
+                        </a-form-item>
+                    </div>
+                    
+                </div>
+                <div class="row" style="margin-top:10px;">
+                    <div class="col-lg-12">
+                        <a-button type="primary" html-type="submit" icon="search">
+                            Tìm kiếm danh mục
+                        </a-button>
+                    </div>
+                </div>
+            </a-form>
             <div class="card-body">
                 <a-table :columns="Columns"
                          :dataSource="Items"
@@ -13,7 +31,7 @@
                     <span slot="action" slot-scope="record">
                         <router-link :to="{path:'/category/list/' + record.id}">
                             <a-button class="btn btn-sm btn-primary mr-2">
-                                <a-icon type="login" style="position: relative; bottom:3px;"/>
+                                <a-icon type="login" style="position: relative; bottom:3px;" />
                                 Xem thêm
                             </a-button>
                         </router-link>
@@ -41,7 +59,7 @@
                           prev_page:'Trang Trước',
                           }">
                 </a-pagination>
-            </div> 
+            </div>
         </div>
     </div>
 
@@ -183,6 +201,7 @@
         position: relative;
         left: 200px;
     }
+
     h3 {
         position: relative;
         left: 450px;
