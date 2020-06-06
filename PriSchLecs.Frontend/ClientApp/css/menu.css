@@ -1,0 +1,25 @@
+﻿#components-layout-demo-top-side-2 .logo {
+    width: 120px;
+    height: 31px;
+    margin: 16px 28px 16px 0;
+    float: left;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+}
+#search {
+    display: flex;
+    width: 240px;
+    height: 30px;
+    position: absolute;
+    top: 20px;
+    left: calc(100% - 300px);
+}
+#components-layout-demo-top-side-2 .contact {
+    display: inline-grid;
+    text-align: left;
+    line-height: 15px;
+    position: relative;
+    left: calc(100% - 320px);
+    top: -50px;
+}
