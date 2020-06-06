@@ -1,2 +1,2 @@
-PriSchLecs = Primary School Lectures
-se project 2020
+se project 
+= Primary School Lectures
