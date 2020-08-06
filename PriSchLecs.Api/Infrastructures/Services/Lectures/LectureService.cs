@@ -127,8 +127,8 @@ namespace PriSchLecs.Api.Infrastructures.Services.Lectures
         private async Task<BaseResult> Update(Lecture lecture)
         {
             var result = new CreateOrUpdateResult() { Result = Result.Success };
-            var lectureForUpdation = LectureRepository.Query().FirstOrDefault(l => l.Id == lecture.Id);
-            if (lectureForUpdation == null)
+            var lectureForUpdate = LectureRepository.Query().FirstOrDefault(l => l.Id == lecture.Id);
+            if (lectureForUpdate == null)
             {
                 result.Result = Result.Failed;
                 result.Message = "Không tìm thấy bài giảng";
@@ -136,17 +136,17 @@ namespace PriSchLecs.Api.Infrastructures.Services.Lectures
             }
             try
             {
-                lectureForUpdation = lecture.ToLecture(lectureForUpdation);
-                lectureForUpdation = lectureForUpdation.UpdateCommonInt();
+                lectureForUpdate = lecture.ToLecture(lectureForUpdate);
+                lectureForUpdate = lectureForUpdate.UpdateCommonInt();
 
-                await LectureRepository.UpdateAsync(lectureForUpdation);
+                await LectureRepository.UpdateAsync(lectureForUpdate);
             }
             catch(Exception e)
             {
                 result.Result = Result.SystemError;
                 result.Message = e.ToString();
             }
-            result.Id = lectureForUpdation.Id;
+            result.Id = lectureForUpdate.Id;
             return result;
         }
     }

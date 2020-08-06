@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using PriSchLecs.Api.Domains.BaseEntities;
@@ -13,6 +14,7 @@ namespace PriSchLecs.Api.Domains.Lectures
         /// <summary>
         /// Nội dung bình luận
         /// </summary>
+        [Required]
         public string Content { get; set; }
 
         /// <summary>
@@ -28,6 +30,7 @@ namespace PriSchLecs.Api.Domains.Lectures
         /// <summary>
         /// Mã bài giảng
         /// </summary>
+        [Required]
         public int LectureId { get; set; }
 
         /// <summary>

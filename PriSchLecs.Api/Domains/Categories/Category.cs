@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using PriSchLecs.Api.Domains.BaseEntities;
@@ -11,6 +12,7 @@ namespace PriSchLecs.Api.Domains.Categories
         /// <summary>
         /// Tên danh mục
         /// </summary>
+        [Required]
         public string Name { get; set; }
 
         /// <summary>

@@ -130,8 +130,8 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
         private async Task<BaseResult> Update(Category category)
         {
             var result = new CreateOrUpdateResult() { Result = Result.Success };
-            var categoryForUpdation = CategoryRepository.Query().FirstOrDefault(l => l.Id == category.Id);
-            if (categoryForUpdation == null)
+            var categoryForUpdate = CategoryRepository.Query().FirstOrDefault(l => l.Id == category.Id);
+            if (categoryForUpdate == null)
             {
                 result.Result = Result.Failed;
                 result.Message = "Không tìm thấy danh mục";
@@ -139,17 +139,17 @@ namespace PriSchLecs.Api.Infrastructures.Services.Categories
             }
             try
             {
-                categoryForUpdation = category.ToCategory(categoryForUpdation);
-                categoryForUpdation = categoryForUpdation.UpdateCommonInt();
+                categoryForUpdate = category.ToCategory(categoryForUpdate);
+                categoryForUpdate = categoryForUpdate.UpdateCommonInt();
 
-                await CategoryRepository.UpdateAsync(categoryForUpdation);
+                await CategoryRepository.UpdateAsync(categoryForUpdate);
             }
             catch (Exception e)
             {
                 result.Result = Result.SystemError;
                 result.Message = e.ToString();
             }
-            result.Id = categoryForUpdation.Id;
+            result.Id = categoryForUpdate.Id;
             return result;
         }
     }
